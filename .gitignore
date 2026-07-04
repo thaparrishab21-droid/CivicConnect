@@ -1,0 +1,16 @@
+# Node dependencies (never commit this)
+node_modules/
+
+# Environment variables (contains passwords/secrets)
+.env
+backend/.env
+
+# Uploads directory (stores users' uploaded files)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# System and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
