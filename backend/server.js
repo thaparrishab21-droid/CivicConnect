@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const db = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const issueRoutes = require('./routes/issueRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,8 +19,12 @@ app.use(express.json());
 // express.urlencoded() allows us to read incoming form submissions
 app.use(express.urlencoded({ extended: true }));
 
+// Serve the uploaded images folder statically so they are accessible via URLs (e.g. http://localhost:5000/uploads/file.jpg)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // --- ROUTES ---
 app.use('/api/auth', authRoutes);
+app.use('/api/issues', issueRoutes);
 
 // --- BASE ROUTE ---
 // A simple test route to check if our API is alive
