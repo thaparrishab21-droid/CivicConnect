@@ -2,6 +2,23 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
+
+// --- ENVIRONMENT VARIABLE VALIDATION ---
+// In production, we must make sure all required configurations are present before the app starts.
+// This is called the "Fail-Fast" pattern.
+const checkRequiredEnv = () => {
+  const requiredEnv = ['JWT_SECRET'];
+  const missingEnv = requiredEnv.filter((envName) => !process.env[envName]);
+
+  if (missingEnv.length > 0) {
+    console.error('❌ CRITICAL ERROR: Missing required environment variables in backend/.env:');
+    missingEnv.forEach((envName) => console.error(`   - ${envName}`));
+    console.error('\n⚠️ Server startup aborted. Please define these variables in your .env file.');
+    process.exit(1); // Exit the server with an error code (1)
+  }
+};
+checkRequiredEnv();
+
 const db = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const issueRoutes = require('./routes/issueRoutes');
