@@ -84,6 +84,7 @@ a {
   font-weight: 800;
   background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-teal) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
@@ -232,6 +233,7 @@ select.form-control option {
   margin-bottom: 1.5rem;
   background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
