@@ -14,3 +14,8 @@ backend/uploads/*
 Thumbs.db
 .vscode/
 .idea/
+
+# Local databases
+*.sqlite
+backend/database.sqlite
+

@@ -19,13 +19,49 @@ function showAlert(message, type = 'danger') {
 document.addEventListener('DOMContentLoaded', () => {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
+  const urlParams = new URLSearchParams(window.location.search);
+  const portal = urlParams.get('portal');
   
+  // Dynamic header customization if in Admin Portal mode
+  if (portal === 'admin') {
+    const authHeaderTitle = document.querySelector('.auth-header h2');
+    const authHeaderDesc = document.querySelector('.auth-header p');
+    if (authHeaderTitle) authHeaderTitle.innerText = 'Admin Portal';
+    if (authHeaderDesc) authHeaderDesc.innerText = 'Access the CivicConnect administration panel';
+    
+    // Create and display a badge indicating Admin Mode
+    const authHeader = document.querySelector('.auth-header');
+    if (authHeader && !document.getElementById('portal-badge')) {
+      const badge = document.createElement('span');
+      badge.id = 'portal-badge';
+      badge.style.display = 'inline-block';
+      badge.style.backgroundColor = 'rgba(20, 184, 166, 0.15)'; 
+      badge.style.color = 'var(--accent-teal)';
+      badge.style.padding = '0.35rem 0.85rem';
+      badge.style.borderRadius = '50px';
+      badge.style.fontSize = '0.8rem';
+      badge.style.fontWeight = '600';
+      badge.style.marginBottom = '1rem';
+      badge.style.border = '1px solid rgba(20, 184, 166, 0.3)';
+      badge.style.textTransform = 'uppercase';
+      badge.style.letterSpacing = '0.05em';
+      badge.innerText = 'Admin Access Only';
+      
+      authHeader.insertBefore(badge, authHeader.firstChild);
+    }
+  }
+
   if (token && user) {
-    // If they are logged in, redirect them immediately to their dashboard
-    if (user.role === 'admin') {
-      window.location.href = 'admin.html';
+    if (portal === 'admin' && user.role !== 'admin') {
+      // Clear citizen session to allow logging in as admin
+      localStorage.clear();
     } else {
-      window.location.href = 'dashboard.html';
+      // If they are logged in, redirect them immediately to their dashboard
+      if (user.role === 'admin') {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
     }
   }
 });
@@ -77,6 +113,10 @@ if (loginForm) {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
     
+    // Check if we are in admin portal mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const portal = urlParams.get('portal');
+    
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -90,6 +130,11 @@ if (loginForm) {
       
       if (!response.ok) {
         throw new Error(data.message || 'Login failed.');
+      }
+      
+      // If we are in the admin portal, verify user is actually an admin
+      if (portal === 'admin' && data.user.role !== 'admin') {
+        throw new Error('Unauthorized: Only administrators can access the Admin Portal.');
       }
       
       // Save JWT token and user info into local storage
@@ -108,3 +153,29 @@ if (loginForm) {
     }
   });
 }
+
+// --- PASSWORD VISIBILITY TOGGLE ---
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleButtons = document.querySelectorAll('.password-toggle-btn');
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const wrapper = button.closest('.password-wrapper');
+      if (!wrapper) return;
+      const input = wrapper.querySelector('input');
+      const eyeIcon = button.querySelector('.eye-icon');
+      const eyeSlashIcon = button.querySelector('.eye-slash-icon');
+      
+      if (input && eyeIcon && eyeSlashIcon) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          eyeIcon.style.display = 'none';
+          eyeSlashIcon.style.display = 'block';
+        } else {
+          input.type = 'password';
+          eyeIcon.style.display = 'block';
+          eyeSlashIcon.style.display = 'none';
+        }
+      }
+    });
+  });
+});
