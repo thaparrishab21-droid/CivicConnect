@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <a href="index.html" class="nav-logo">
+      <span>🏛️</span> CivicConnect
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="register.html" class="btn btn-primary">Register</a>
+    </nav>
+  </header>
+
+  <!-- Login Card -->
+  <main class="container fade-in">
+    <div class="auth-container">
+      <div class="card">
+        <div class="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Login to report and track civic issues</p>
+        </div>
+
+        <!-- Alert Notification Panel -->
+        <div id="alert-box" style="display: none;"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="e.g. aman@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+            Login
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+          Don't have an account yet? <a href="register.html" style="color: var(--primary); font-weight: 500;">Register here</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Hook up Auth Javascript Logic -->
+  <script src="js/auth.js"></script>
+</body>
+</html>

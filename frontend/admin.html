@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <span>🏛️</span> CivicConnect <span style="font-size: 0.8rem; background: var(--primary); padding: 0.2rem 0.6rem; border-radius: 9999px; font-family: var(--font-body); letter-spacing: 0;">Admin Portal</span>
+    </div>
+    <nav class="nav-links">
+      <span id="welcome-message" style="font-weight: 500;">Welcome, Admin</span>
+      <button id="logout-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+        Logout
+      </button>
+    </nav>
+  </header>
+
+  <main class="container fade-in">
+    <!-- Header & Quick Filters -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <h2>All Reported Issues (Admin Mode)</h2>
+      <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+        <!-- Status Filter -->
+        <select id="filter-status" class="form-control" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+        
+        <!-- Category Filter -->
+        <select id="filter-category" class="form-control" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
+          <option value="">All Categories</option>
+          <option value="Pothole">Pothole</option>
+          <option value="Garbage Dump">Garbage Dump</option>
+          <option value="Water Leakage">Water Leakage</option>
+          <option value="Broken Streetlight">Broken Streetlight</option>
+          <option value="Drainage Issue">Drainage Issue</option>
+          <option value="Damaged Road">Damaged Road</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Alert Notification Panel -->
+    <div id="alert-box" style="display: none;"></div>
+
+    <!-- Admin Issues Container -->
+    <div id="admin-issues-list" class="issues-grid">
+      <div style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted);">
+        Loading civic issues...
+      </div>
+    </div>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

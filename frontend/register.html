@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Create Account</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <a href="index.html" class="nav-logo">
+      <span>🏛️</span> CivicConnect
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="login.html" class="btn btn-secondary">Login</a>
+    </nav>
+  </header>
+
+  <!-- Registration Card -->
+  <main class="container fade-in">
+    <div class="auth-container">
+      <div class="card">
+        <div class="auth-header">
+          <h2>Create Account</h2>
+          <p>Join CivicConnect and start reporting local issues</p>
+        </div>
+
+        <!-- Alert Notification Panel -->
+        <div id="alert-box" style="display: none;"></div>
+
+        <form id="register-form">
+          <div class="form-group">
+            <label class="form-label" for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Aman Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="e.g. aman@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Min. 6 characters" minlength="6" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-role">Role</label>
+            <select id="reg-role" class="form-control">
+              <option value="citizen">Citizen (Default)</option>
+              <option value="admin">Admin (For Municipal Testing)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+            Create Account
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+          Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 500;">Login here</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Hook up Auth Javascript Logic -->
+  <script src="js/auth.js"></script>
+</body>
+</html>
