@@ -21,4 +21,11 @@ router.post('/', verifyToken, (req, res, next) => {
 // Secured by verifyToken so only logged-in users can search/view issues
 router.get('/', verifyToken, issueController.getIssues);
 
+// Import admin verification middleware
+const isAdmin = require('../middleware/adminMiddleware');
+
+// Route to Update Issue Status: PUT /api/issues/:id/status
+// Restrained by verifyToken (must be logged in) AND isAdmin (must have role 'admin')
+router.put('/:id/status', verifyToken, isAdmin, issueController.updateIssueStatus);
+
 module.exports = router;

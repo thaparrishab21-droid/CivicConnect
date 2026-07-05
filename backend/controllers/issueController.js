@@ -95,3 +95,39 @@ exports.getIssues = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching issues.' });
   }
 };
+
+// --- UPDATE CIVIC ISSUE STATUS (PUT /api/issues/:id/status) ---
+// Only accessible by Admins
+exports.updateIssueStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // A. Validation: Make sure the status is provided and is a valid option
+    const validStatuses = ['Pending', 'In Progress', 'Resolved'];
+    if (!status || !validStatuses.includes(status)) {
+      return res.status(400).json({ message: 'Please provide a valid status: Pending, In Progress, or Resolved.' });
+    }
+
+    // B. Run SQL UPDATE query to modify the status of the issue
+    const [result] = await db.query(
+      'UPDATE issues SET status = ? WHERE id = ?',
+      [status, id]
+    );
+
+    // C. Check if the issue was found
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Civic issue not found.' });
+    }
+
+    // D. Return success response
+    res.json({
+      message: `Issue status updated successfully to '${status}'!`,
+      issueId: id,
+      newStatus: status
+    });
+  } catch (error) {
+    console.error('Update Status Error:', error);
+    res.status(500).json({ message: 'Server error while updating issue status.' });
+  }
+};
