@@ -11,7 +11,11 @@
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="nav-logo">
-      <span>🏛️</span> CivicConnect <span style="font-size: 0.8rem; background: var(--primary); color: #ffffff; -webkit-text-fill-color: #ffffff; padding: 0.2rem 0.6rem; border-radius: 9999px; font-family: var(--font-body); letter-spacing: 0;">Admin Portal</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
+      </svg>
+      CivicConnect 
+      <span id="portal-badge">Admin Portal</span>
     </div>
     <nav class="nav-links">
       <span id="welcome-message" style="font-weight: 500;">Welcome, Admin</span>
@@ -22,12 +26,67 @@
   </header>
 
   <main class="container fade-in">
-    <!-- Header & Quick Filters -->
+    <!-- Dashboard Quick Metrics -->
+    <div class="dashboard-stats-grid">
+      <!-- Total Issues -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Reports</span>
+          <span class="stat-val" id="stats-total">0</span>
+        </div>
+      </div>
+      <!-- Pending -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper pending">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Pending</span>
+          <span class="stat-val" id="stats-pending">0</span>
+        </div>
+      </div>
+      <!-- In Progress -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper progress">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">In Progress</span>
+          <span class="stat-val" id="stats-progress">0</span>
+        </div>
+      </div>
+      <!-- Resolved -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper resolved">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Resolved</span>
+          <span class="stat-val" id="stats-resolved">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters and Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
       <h2>All Reported Issues (Admin Mode)</h2>
       <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
         <!-- Status Filter -->
-        <select id="filter-status" class="form-control" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
+        <select id="filter-status" class="form-control" style="width: auto; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
           <option value="">All Statuses</option>
           <option value="Pending">Pending</option>
           <option value="In Progress">In Progress</option>
@@ -35,7 +94,7 @@
         </select>
         
         <!-- Category Filter -->
-        <select id="filter-category" class="form-control" style="width: auto; padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
+        <select id="filter-category" class="form-control" style="width: auto; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
           <option value="">All Categories</option>
           <option value="Pothole">Pothole</option>
           <option value="Garbage Dump">Garbage Dump</option>

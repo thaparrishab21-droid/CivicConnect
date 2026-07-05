@@ -78,13 +78,32 @@ async function fetchIssues(myIssues = false, category = '') {
     
     const issues = await response.json();
     
+    // Calculate and render stats metrics dynamically
+    const totalCount = issues.length;
+    const pendingCount = issues.filter(i => i.status === 'Pending').length;
+    const progressCount = issues.filter(i => i.status === 'In Progress').length;
+    const resolvedCount = issues.filter(i => i.status === 'Resolved').length;
+    
+    const statsTotal = document.getElementById('stats-total');
+    const statsPending = document.getElementById('stats-pending');
+    const statsProgress = document.getElementById('stats-progress');
+    const statsResolved = document.getElementById('stats-resolved');
+    
+    if (statsTotal) statsTotal.innerText = totalCount;
+    if (statsPending) statsPending.innerText = pendingCount;
+    if (statsProgress) statsProgress.innerText = progressCount;
+    if (statsResolved) statsResolved.innerText = resolvedCount;
+    
     // Check if empty
     if (issues.length === 0) {
       issuesListContainer.innerHTML = `
-        <div style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted); background: var(--bg-glass); border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+        <div style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted); background: var(--bg-secondary); border: 1px dashed var(--border-color); border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 1rem; opacity: 0.4;">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
           <h3>No reported issues found.</h3>
-          <p style="margin-top: 0.5rem;">Be the first to report an issue in your area!</p>
+          <p style="margin-top: 0.5rem; font-size: 0.95rem;">Be the first to report an issue in your area!</p>
         </div>
       `;
       return;
@@ -104,11 +123,15 @@ async function fetchIssues(myIssues = false, category = '') {
         day: 'numeric'
       });
       
-      // Check if image exists, otherwise show a nice colored card placeholder based on category
+      // Check if image exists, otherwise show a nice custom vector placeholder
       const imageHTML = issue.image_url 
         ? `<img src="${BACKEND_URL}${issue.image_url}" alt="${issue.title}" class="issue-image">`
-        : `<div style="width:100%; height:200px; border-radius:8px; margin-bottom:1.2rem; display:flex; flex-direction:column; align-items:center; justify-content:center; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%); border: 1px dashed var(--border-glass); color: var(--text-muted);">
-             <span style="font-size: 2.5rem; margin-bottom:0.5rem;">🏛️</span>
+        : `<div class="issue-placeholder-img">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+               <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+               <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+               <line x1="12" y1="22.08" x2="12" y2="12"></line>
+             </svg>
              <span>No photo uploaded</span>
            </div>`;
            
@@ -121,10 +144,22 @@ async function fetchIssues(myIssues = false, category = '') {
           </div>
           <p class="issue-desc">${escapeHTML(issue.description)}</p>
           <div class="issue-meta">
-            <div class="issue-meta-item">📁 <strong>Category:</strong> ${issue.category}</div>
-            <div class="issue-meta-item">📍 <strong>Location:</strong> ${escapeHTML(issue.location)}</div>
-            <div class="issue-meta-item">👤 <strong>Reported By:</strong> ${escapeHTML(issue.reporter_name)}</div>
-            <div class="issue-meta-item">📅 <strong>Date:</strong> ${reportDate}</div>
+            <div class="issue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              <span><strong>Category:</strong> ${issue.category}</span>
+            </div>
+            <div class="issue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span><strong>Location:</strong> ${escapeHTML(issue.location)}</span>
+            </div>
+            <div class="issue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span><strong>By:</strong> ${escapeHTML(issue.reporter_name)}</span>
+            </div>
+            <div class="issue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span><strong>Date:</strong> ${reportDate}</span>
+            </div>
           </div>
         </div>
       `;

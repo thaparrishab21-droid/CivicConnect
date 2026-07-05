@@ -13,10 +13,14 @@
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="nav-logo">
-      <span>🏛️</span> CivicConnect
+      <!-- Building Icon SVG -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
+      </svg>
+      CivicConnect
     </div>
     <nav class="nav-links">
-      <a href="index.html" class="nav-link" style="color: var(--text-main);">Home</a>
+      <a href="index.html" class="nav-link active">Home</a>
       <a href="login.html" class="btn btn-secondary">Login</a>
       <a href="register.html" class="btn btn-primary">Register</a>
     </nav>
@@ -25,52 +29,76 @@
   <!-- Hero Section -->
   <main class="container fade-in">
     <section class="hero">
-      <span class="hero-tagline">Empowering Communities</span>
+      <span class="hero-tagline">
+        <!-- Shield Icon SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Empowering Communities
+      </span>
       <h1>Bridge the gap between Citizens and Authorities</h1>
       <p>
         See a pothole? Broken streetlights? Garbage accumulation? Report it on CivicConnect.
         Track its progress in real-time as local authorities resolve the issue.
       </p>
       <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-        <a href="register.html" class="btn btn-primary">Report an Issue Now</a>
+        <a href="register.html" class="btn btn-primary">
+          Report an Issue Now
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
         <a href="login.html?portal=admin" class="btn btn-secondary">Admin Portal</a>
       </div>
     </section>
 
     <!-- Features Section -->
     <section class="card" style="margin-top: 4rem;">
-      <h2
-        style="text-align: center; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, #ffffff, var(--accent-teal)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
-        How It Works
-      </h2>
-      <div
-        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 2.5rem;">How It Works</h2>
+      
+      <div class="landing-grid">
 
-        <div
-          style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); padding: 2rem; border-radius: 12px; text-align: center;">
-          <div style="font-size: 2.5rem; margin-bottom: 1rem;">📝</div>
+        <!-- Card 1 -->
+        <div class="card landing-feat-card">
+          <!-- File Text Icon SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
           <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">1. Report</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
             Snap a picture of the civic issue, select a category (e.g., Pothole, Water Leakage), write a short
             description, and add the location.
           </p>
         </div>
 
-        <div
-          style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); padding: 2rem; border-radius: 12px; text-align: center;">
-          <div style="font-size: 2.5rem; margin-bottom: 1rem;">⏳</div>
+        <!-- Card 2 -->
+        <div class="card landing-feat-card">
+          <!-- Clock Icon SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
           <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">2. Track</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
             Monitor the status of your reported issues in real-time. Watch them transition from "Pending" to "In
             Progress" and finally "Resolved".
           </p>
         </div>
 
-        <div
-          style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); padding: 2rem; border-radius: 12px; text-align: center;">
-          <div style="font-size: 2.5rem; margin-bottom: 1rem;">✅</div>
+        <!-- Card 3 -->
+        <div class="card landing-feat-card">
+          <!-- Shield Check Icon SVG -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <polyline points="9 11 11 13 15 9"></polyline>
+          </svg>
           <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">3. Resolve</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem;">
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
             Admins assign maintenance personnel to resolve issues and update the status on the portal, keeping the
             community clean and safe.
           </p>
@@ -80,8 +108,7 @@
     </section>
   </main>
 
-  <footer
-    style="text-align: center; padding: 4rem 1rem 2rem 1rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-glass); margin-top: 6rem;">
+  <footer style="text-align: center; padding: 4rem 1rem 2rem 1rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 6rem;">
     &copy; 2026 CivicConnect. Built to improve city maintenance and transparency.
   </footer>
 

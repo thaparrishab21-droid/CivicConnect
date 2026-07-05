@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CivicConnect - Create Account</title>
+  <title>CivicConnect - Register</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,10 @@
   <!-- Navigation Bar -->
   <header class="navbar">
     <a href="index.html" class="nav-logo">
-      <span>🏛️</span> CivicConnect
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
+      </svg>
+      CivicConnect
     </a>
     <nav class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
@@ -24,8 +27,8 @@
     <div class="auth-container">
       <div class="card">
         <div class="auth-header">
-          <h2>Create Account</h2>
-          <p>Join CivicConnect and start reporting local issues</p>
+          <h2>Create an Account</h2>
+          <p>Join CivicConnect to start tracking local issues</p>
         </div>
 
         <!-- Alert Notification Panel -->
@@ -47,12 +50,12 @@
             <div class="password-wrapper">
               <input type="password" id="reg-password" class="form-control" placeholder="Min. 6 characters" minlength="6" required>
               <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility">
-                <!-- Eye icon (arch over circle) -->
+                <!-- Eye icon -->
                 <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M4 15 A 8 8 0 0 1 20 15" />
                   <circle cx="12" cy="15" r="3" />
                 </svg>
-                <!-- Eye slash icon (slashed arch over circle) -->
+                <!-- Eye slash icon -->
                 <svg class="eye-slash-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
                   <path d="M4 15 A 8 8 0 0 1 20 15" />
                   <circle cx="12" cy="15" r="3" />
@@ -72,6 +75,10 @@
 
           <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
             Create Account
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
           </button>
         </form>
 
