@@ -53,8 +53,9 @@ function showNotification(message, type = 'danger') {
 // --- VIEW & MANAGE ALL ISSUES ---
 let currentStatusFilter = '';
 let currentCategoryFilter = '';
+let currentDeletedFilter = 'false';
 
-async function fetchAdminIssues(status = '', category = '') {
+async function fetchAdminIssues(status = '', category = '', showDeleted = 'false') {
   const adminIssuesContainer = document.getElementById('admin-issues-list');
   if (!adminIssuesContainer) return;
   
@@ -68,6 +69,7 @@ async function fetchAdminIssues(status = '', category = '') {
     let url = `${API_BASE_URL}/issues?`;
     if (status) url += `status=${status}&`;
     if (category) url += `category=${encodeURIComponent(category)}&`;
+    if (showDeleted === 'true') url += `showDeleted=true&`;
     
     const response = await fetch(url, {
       method: 'GET',
@@ -138,6 +140,38 @@ async function fetchAdminIssues(status = '', category = '') {
              </svg>
              <span>No photo uploaded</span>
            </div>`;
+
+      // Audit Trail Info for deleted issues
+      const auditHTML = issue.is_deleted === 1
+        ? `<div style="background: rgba(239, 68, 68, 0.05); padding: 0.8rem; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.2); margin-bottom: 1.25rem; font-size: 0.825rem; line-height: 1.45;">
+             <span style="color: hsl(0, 86%, 70%); font-weight: bold;">🗑️ Removed Audit Trail:</span><br>
+             <strong>Reason:</strong> ${escapeHTML(issue.deletion_reason || 'No reason specified')}<br>
+             <span style="color: var(--text-muted); font-size: 0.75rem;">Deleted at ${new Date(issue.deleted_at).toLocaleString()}</span>
+           </div>`
+        : '';
+
+      // Action panel (Restore button for deleted issues, status select & delete button for active issues)
+      const actionHTML = issue.is_deleted === 1
+        ? `<div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: flex-end;">
+             <button type="button" class="btn btn-primary btn-restore" data-id="${issue.id}" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background-color: var(--status-resolved); box-shadow: 0 2px 6px rgba(16,185,129,0.2); border: none; display: flex; align-items: center; gap: 0.3rem; cursor: pointer; transition: var(--transition-smooth);">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; color: white;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+               Restore Ticket
+             </button>
+           </div>`
+        : `<div style="margin-bottom: 1.25rem;">
+             <label class="form-label" style="margin-bottom: 0.4rem;">Update Action Status:</label>
+             <select class="form-control status-select" data-id="${issue.id}" style="padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem;">
+               <option value="Pending" ${issue.status === 'Pending' ? 'selected' : ''}>Pending</option>
+               <option value="In Progress" ${issue.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+               <option value="Resolved" ${issue.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+             </select>
+           </div>
+           <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: flex-end;">
+             <button type="button" class="btn btn-secondary btn-delete-admin" data-id="${issue.id}" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; border-color: rgba(239, 68, 68, 0.3); color: hsl(0, 86%, 70%); background: rgba(239, 68, 68, 0.03); display: flex; align-items: center; gap: 0.3rem; cursor: pointer; transition: var(--transition-smooth);">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; color: hsl(0, 86%, 70%);"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+               Delete Complaint (Spam/Abuse)
+             </button>
+           </div>`;
            
       return `
         <div class="card issue-card fade-in">
@@ -151,16 +185,10 @@ async function fetchAdminIssues(status = '', category = '') {
           </div>
           <p class="issue-desc">${escapeHTML(issue.description)}</p>
           
-          <div style="margin-bottom: 1.5rem;">
-            <label class="form-label" style="margin-bottom: 0.4rem;">Update Action Status:</label>
-            <select class="form-control status-select" data-id="${issue.id}" style="padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem;">
-              <option value="Pending" ${issue.status === 'Pending' ? 'selected' : ''}>Pending</option>
-              <option value="In Progress" ${issue.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-              <option value="Resolved" ${issue.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
-            </select>
-          </div>
+          ${auditHTML}
+          ${actionHTML}
           
-          <div class="issue-meta">
+          <div class="issue-meta" style="margin-top: 1.25rem;">
             <div class="issue-meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
               <span><strong>Category:</strong> ${issue.category}</span>
@@ -200,6 +228,79 @@ async function fetchAdminIssues(status = '', category = '') {
         await updateStatus(issueId, newStatus, e.target);
       });
     });
+
+    // Attach click event listeners to admin delete buttons
+    const deleteButtons = document.querySelectorAll('.btn-delete-admin');
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const issueId = btn.getAttribute('data-id');
+        const reason = prompt('Please enter the reason for removing this complaint (e.g. Spam, Duplicate content, Inappropriate language):');
+        
+        if (reason === null) return; // Cancelled
+        if (!reason.trim()) {
+          alert('You must provide a deletion reason for the audit trail.');
+          return;
+        }
+
+        btn.innerText = 'Deleting...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(`${API_BASE_URL}/issues/${issueId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ reason: reason.trim() })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || 'Failed to delete issue.');
+
+          showNotification('Complaint removed and logged successfully.', 'success');
+          await fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
+        } catch (err) {
+          showNotification(err.message, 'danger');
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; color: hsl(0, 86%, 70%);"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+            Delete Complaint (Spam/Abuse)
+          `;
+          btn.disabled = false;
+        }
+      });
+    });
+
+    // Attach click event listeners to admin restore buttons
+    const restoreButtons = document.querySelectorAll('.btn-restore');
+    restoreButtons.forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const issueId = btn.getAttribute('data-id');
+        if (confirm('Are you sure you want to restore this complaint back to active status?')) {
+          btn.innerText = 'Restoring...';
+          btn.disabled = true;
+          try {
+            const res = await fetch(`${API_BASE_URL}/issues/${issueId}/restore`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || 'Failed to restore issue.');
+
+            showNotification('Complaint ticket restored successfully.', 'success');
+            await fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
+          } catch (err) {
+            showNotification(err.message, 'danger');
+            btn.innerHTML = `
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; color: white;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Restore Ticket
+            `;
+            btn.disabled = false;
+          }
+        }
+      });
+    });
     
   } catch (error) {
     showNotification(error.message);
@@ -224,7 +325,7 @@ async function updateStatus(id, status, selectElement) {
       throw new Error(data.message || 'Failed to update status.');
     }
     
-    showNotification(`Status updated to "${status}" successfully!`, 'success');
+    showNotification('Issue status updated successfully!', 'success');
     
     // Dynamically update the badge on the UI without reloading the whole list
     const badge = document.getElementById(`badge-${id}`);
@@ -241,7 +342,7 @@ async function updateStatus(id, status, selectElement) {
   } catch (error) {
     showNotification(error.message);
     // Revert select option to previous state if error occurred
-    fetchAdminIssues(currentStatusFilter, currentCategoryFilter);
+    fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
   }
 }
 
@@ -261,18 +362,24 @@ function escapeHTML(str) {
 // Event Listeners for Filters
 const selectStatus = document.getElementById('filter-status');
 const selectCategory = document.getElementById('filter-category');
+const selectDeleted = document.getElementById('filter-deleted');
 
-if (selectStatus && selectCategory) {
+if (selectStatus && selectCategory && selectDeleted) {
   selectStatus.addEventListener('change', (e) => {
     currentStatusFilter = e.target.value;
-    fetchAdminIssues(currentStatusFilter, currentCategoryFilter);
+    fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
   });
   
   selectCategory.addEventListener('change', (e) => {
     currentCategoryFilter = e.target.value;
-    fetchAdminIssues(currentStatusFilter, currentCategoryFilter);
+    fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
+  });
+  
+  selectDeleted.addEventListener('change', (e) => {
+    currentDeletedFilter = e.target.value;
+    fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
   });
   
   // Trigger initial fetch
-  fetchAdminIssues();
+  fetchAdminIssues(currentStatusFilter, currentCategoryFilter, currentDeletedFilter);
 }

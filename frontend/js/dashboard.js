@@ -179,9 +179,49 @@ async function fetchIssues(myIssues = false, category = '') {
               <span>${issue.support_count || 0} Citizens Supported</span>
             </div>
           </div>
+          ${issue.user_id === user.id ? `
+          <div style="margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1rem; display: flex; justify-content: flex-end;">
+            <button type="button" class="btn btn-secondary btn-withdraw" data-id="${issue.id}" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: flex; align-items: center; gap: 0.3rem; border-color: rgba(239, 68, 68, 0.3); color: hsl(0, 86%, 70%); background: rgba(239, 68, 68, 0.03); cursor: pointer; transition: var(--transition-smooth);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: hsl(0, 86%, 70%);"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              Withdraw Complaint
+            </button>
+          </div>` : ''}
         </div>
       `;
     }).join('');
+
+    // Bind click events for withdraw buttons
+    document.querySelectorAll('.btn-withdraw').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const issueId = btn.getAttribute('data-id');
+        if (confirm('Are you sure you want to withdraw this complaint? This action cannot be undone.')) {
+          btn.innerText = 'Withdrawing...';
+          btn.disabled = true;
+          try {
+            const response = await fetch(`${API_BASE_URL}/issues/${issueId}`, {
+              method: 'DELETE',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || 'Failed to withdraw complaint.');
+            
+            showNotification('Complaint withdrawn successfully!', 'success');
+            // Refresh list dynamically
+            await fetchIssues(currentFilterMyReports, currentCategoryFilter);
+          } catch (err) {
+            showNotification(err.message, 'danger');
+            btn.innerHTML = `
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; color: hsl(0, 86%, 70%);"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              Withdraw Complaint
+            `;
+            btn.disabled = false;
+          }
+        }
+      });
+    });
     
   } catch (error) {
     showNotification(error.message);

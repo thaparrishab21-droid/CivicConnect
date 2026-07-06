@@ -94,6 +94,34 @@ const initDb = () => {
             else console.log("✅ Added column 'longitude' to issues table.");
           });
         }
+
+        if (!columns.includes('is_deleted')) {
+          db.run("ALTER TABLE issues ADD COLUMN is_deleted INTEGER DEFAULT 0;", (err) => {
+            if (err) console.error("❌ Error adding column is_deleted:", err.message);
+            else console.log("✅ Added column 'is_deleted' to issues table.");
+          });
+        }
+
+        if (!columns.includes('deleted_at')) {
+          db.run("ALTER TABLE issues ADD COLUMN deleted_at DATETIME DEFAULT NULL;", (err) => {
+            if (err) console.error("❌ Error adding column deleted_at:", err.message);
+            else console.log("✅ Added column 'deleted_at' to issues table.");
+          });
+        }
+
+        if (!columns.includes('deleted_by')) {
+          db.run("ALTER TABLE issues ADD COLUMN deleted_by INTEGER DEFAULT NULL;", (err) => {
+            if (err) console.error("❌ Error adding column deleted_by:", err.message);
+            else console.log("✅ Added column 'deleted_by' to issues table.");
+          });
+        }
+
+        if (!columns.includes('deletion_reason')) {
+          db.run("ALTER TABLE issues ADD COLUMN deletion_reason TEXT DEFAULT NULL;", (err) => {
+            if (err) console.error("❌ Error adding column deletion_reason:", err.message);
+            else console.log("✅ Added column 'deletion_reason' to issues table.");
+          });
+        }
       });
 
       // Add performance indexes

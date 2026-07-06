@@ -79,9 +79,9 @@ exports.createIssue = async (req, res) => {
     // D. AI Duplicate Check (if not forced and API key is set)
     if (forceSubmit !== 'true' && process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
       try {
-        // Fetch all active complaints in the same category
+        // Fetch all active complaints in the same category that are NOT soft-deleted
         const [allCandidates] = await db.query(
-          'SELECT id, title, description, location, latitude, longitude FROM issues WHERE category = ? AND status != "Resolved"',
+          'SELECT id, title, description, location, latitude, longitude FROM issues WHERE category = ? AND status != "Resolved" AND is_deleted = 0',
           [category]
         );
 
@@ -184,7 +184,7 @@ Provide your output in JSON format with the following keys:
 // --- VIEW ISSUES WITH FILTERS AND SORTING (GET /api/issues) ---
 exports.getIssues = async (req, res) => {
   try {
-    const { status, category, myIssues } = req.query;
+    const { status, category, myIssues, showDeleted } = req.query;
 
     // A. Start with a base SQL query that joins the users table to get the reporter's name
     // and returns the count of supports from the issue_supports table
@@ -216,6 +216,13 @@ exports.getIssues = async (req, res) => {
     if (myIssues === 'true') {
       whereClauses.push('issues.user_id = ?');
       queryParams.push(req.user.id);
+    }
+
+    // 4. Filter out soft-deleted issues unless requested by an admin
+    if (req.user && req.user.role === 'admin' && showDeleted === 'true') {
+      whereClauses.push('issues.is_deleted = 1');
+    } else {
+      whereClauses.push('issues.is_deleted = 0');
     }
 
     // C. If there are any WHERE clauses, append them to the main query
@@ -355,11 +362,13 @@ exports.getIssuesAnalytics = async (req, res) => {
         SUM(CASE WHEN status = 'In Progress' THEN 1 ELSE 0 END) AS in_progress,
         SUM(CASE WHEN status = 'Resolved' THEN 1 ELSE 0 END) AS resolved
       FROM issues
+      WHERE is_deleted = 0
     `;
 
     const categoryQuery = `
       SELECT category, COUNT(*) AS count 
       FROM issues 
+      WHERE is_deleted = 0
       GROUP BY category 
       ORDER BY count DESC
     `;
@@ -367,7 +376,7 @@ exports.getIssuesAnalytics = async (req, res) => {
     const trendQuery = `
       SELECT strftime('%Y-%m', created_at) AS month, COUNT(*) AS count
       FROM issues
-      WHERE created_at >= date('now', '-6 month')
+      WHERE created_at >= date('now', '-6 month') AND is_deleted = 0
       GROUP BY month
       ORDER BY month ASC
     `;
@@ -375,6 +384,7 @@ exports.getIssuesAnalytics = async (req, res) => {
     const priorityQuery = `
       SELECT priority, COUNT(*) AS count
       FROM issues
+      WHERE is_deleted = 0
       GROUP BY priority
       ORDER BY count DESC
     `;
@@ -444,6 +454,87 @@ exports.supportIssue = async (req, res) => {
   } catch (error) {
     console.error('Support Issue Error:', error);
     res.status(500).json({ message: 'Server error while supporting issue.' });
+  }
+};
+
+// --- SOFT DELETE/WITHDRAW A CIVIC ISSUE (DELETE /api/issues/:id) ---
+exports.deleteIssue = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const userId = req.user.id;
+    const userRole = req.user.role;
+
+    // 1. Fetch the issue to verify existence and ownership
+    const [issues] = await db.query('SELECT id, user_id, is_deleted FROM issues WHERE id = ?', [id]);
+    if (!issues || issues.length === 0) {
+      return res.status(404).json({ message: 'Civic issue not found.' });
+    }
+
+    const issue = issues[0];
+    if (issue.is_deleted === 1) {
+      return res.status(400).json({ message: 'Civic issue is already deleted.' });
+    }
+
+    // 2. Authorization check: Citizen must be the owner. Admin can delete anything.
+    if (userRole !== 'admin' && issue.user_id !== userId) {
+      return res.status(403).json({ message: 'You are not authorized to delete this complaint.' });
+    }
+
+    const deletionReason = reason ? reason.trim() : (userRole === 'admin' ? 'Removed by Admin' : 'Withdrawn by Citizen');
+
+    // 3. Update columns to soft delete
+    await db.query(
+      `UPDATE issues 
+       SET is_deleted = 1, deleted_at = CURRENT_TIMESTAMP, deleted_by = ?, deletion_reason = ? 
+       WHERE id = ?`,
+      [userId, deletionReason, id]
+    );
+
+    res.json({
+      success: true,
+      message: userRole === 'admin' ? 'Complaint successfully removed by administrator.' : 'Your complaint has been successfully withdrawn.'
+    });
+
+  } catch (error) {
+    console.error('Delete Issue Error:', error);
+    res.status(500).json({ message: 'Server error while deleting issue: ' + error.message });
+  }
+};
+
+// --- RESTORE A SOFT-DELETED CIVIC ISSUE (POST /api/issues/:id/restore) ---
+// Only accessible by Admins
+exports.restoreIssue = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1. Fetch the issue to verify it is deleted
+    const [issues] = await db.query('SELECT id, is_deleted FROM issues WHERE id = ?', [id]);
+    if (!issues || issues.length === 0) {
+      return res.status(404).json({ message: 'Civic issue not found.' });
+    }
+
+    const issue = issues[0];
+    if (issue.is_deleted === 0) {
+      return res.status(400).json({ message: 'Civic issue is not deleted.' });
+    }
+
+    // 2. Restore by resetting columns
+    await db.query(
+      `UPDATE issues 
+       SET is_deleted = 0, deleted_at = NULL, deleted_by = NULL, deletion_reason = NULL 
+       WHERE id = ?`,
+      [id]
+    );
+
+    res.json({
+      success: true,
+      message: 'Complaint successfully restored.'
+    });
+
+  } catch (error) {
+    console.error('Restore Issue Error:', error);
+    res.status(500).json({ message: 'Server error while restoring issue: ' + error.message });
   }
 };
 

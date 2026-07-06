@@ -101,6 +101,12 @@
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
       <h2>All Reported Issues (Admin Mode)</h2>
       <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+        <!-- Deletion Filter -->
+        <select id="filter-deleted" class="form-control" style="width: auto; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0; border-color: rgba(239, 68, 68, 0.3); color: hsl(0, 86%, 70%); background: rgba(239, 68, 68, 0.03);">
+          <option value="false" style="color: var(--text-main); background: var(--bg-secondary);">Active Complaints</option>
+          <option value="true" style="color: hsl(0, 86%, 70%); background: var(--bg-secondary);">🗑️ Recycle Bin (Deleted)</option>
+        </select>
+
         <!-- Status Filter -->
         <select id="filter-status" class="form-control" style="width: auto; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
           <option value="">All Statuses</option>

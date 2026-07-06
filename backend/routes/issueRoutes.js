@@ -40,5 +40,13 @@ router.get('/analytics', verifyToken, issueController.getIssuesAnalytics);
 // Secured by verifyToken
 router.post('/:id/support', verifyToken, issueController.supportIssue);
 
+// Route to Soft Delete/Withdraw a complaint: DELETE /api/issues/:id
+// Secured by verifyToken (ownership verified inside controller)
+router.delete('/:id', verifyToken, issueController.deleteIssue);
+
+// Route to Restore a soft-deleted complaint: POST /api/issues/:id/restore
+// Secured by verifyToken AND isAdmin
+router.post('/:id/restore', verifyToken, isAdmin, issueController.restoreIssue);
+
 module.exports = router;
 
