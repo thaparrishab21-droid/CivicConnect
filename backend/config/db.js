@@ -31,6 +31,19 @@ const initDb = () => {
       )
     `);
 
+    // Create issue_supports table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS issue_supports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        issue_id INTEGER NOT NULL,
+        user_id INTEGER NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(issue_id, user_id),
+        FOREIGN KEY (issue_id) REFERENCES issues(id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+
     // Create Issues table
     db.run(`
       CREATE TABLE IF NOT EXISTS issues (
@@ -46,7 +59,48 @@ const initDb = () => {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
       )
-    `);
+    `, (err) => {
+      if (err) {
+        console.error('❌ Error creating issues table:', err.message);
+        return;
+      }
+      
+      // Dynamic column migration for SQLite
+      db.all("PRAGMA table_info(issues)", [], (err, rows) => {
+        if (err) {
+          console.error("❌ Error fetching table info for issues:", err.message);
+          return;
+        }
+        
+        const columns = rows.map(r => r.name);
+        
+        if (!columns.includes('priority')) {
+          db.run("ALTER TABLE issues ADD COLUMN priority TEXT CHECK(priority IN ('Low', 'Medium', 'High', 'Critical')) DEFAULT 'Medium';", (err) => {
+            if (err) console.error("❌ Error adding column priority:", err.message);
+            else console.log("✅ Added column 'priority' to issues table.");
+          });
+        }
+        
+        if (!columns.includes('latitude')) {
+          db.run("ALTER TABLE issues ADD COLUMN latitude REAL DEFAULT NULL;", (err) => {
+            if (err) console.error("❌ Error adding column latitude:", err.message);
+            else console.log("✅ Added column 'latitude' to issues table.");
+          });
+        }
+        
+        if (!columns.includes('longitude')) {
+          db.run("ALTER TABLE issues ADD COLUMN longitude REAL DEFAULT NULL;", (err) => {
+            if (err) console.error("❌ Error adding column longitude:", err.message);
+            else console.log("✅ Added column 'longitude' to issues table.");
+          });
+        }
+      });
+
+      // Add performance indexes
+      db.run("CREATE INDEX IF NOT EXISTS idx_issues_category ON issues(category);");
+      db.run("CREATE INDEX IF NOT EXISTS idx_issues_status ON issues(status);");
+      db.run("CREATE INDEX IF NOT EXISTS idx_issues_created ON issues(created_at);");
+    });
   });
 };
 
