@@ -4,10 +4,10 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // Configure Chart.js global defaults for dark theme visibility
 if (typeof Chart !== 'undefined') {
-  Chart.defaults.color = 'hsl(215, 20%, 75%)'; // Light slate text
-  Chart.defaults.borderColor = 'hsl(217, 33%, 17%)'; // Grid line border color
-  Chart.defaults.plugins.legend.labels.color = 'hsl(210, 40%, 98%)'; // Legend labels
-  Chart.defaults.plugins.title.color = 'hsl(210, 40%, 98%)'; // Title
+  Chart.defaults.color = 'hsl(160, 12%, 65%)'; // Light slate-green text
+  Chart.defaults.borderColor = 'hsl(160, 20%, 15%)'; // Grid line border color
+  Chart.defaults.plugins.legend.labels.color = 'hsl(150, 20%, 98%)'; // Legend labels
+  Chart.defaults.plugins.title.color = 'hsl(150, 20%, 98%)'; // Title
 }
 
 
@@ -121,9 +121,9 @@ function renderTrendChart(trendsData) {
 
   // Premium area fill gradient
   const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-  gradient.addColorStop(0, 'rgba(59, 130, 246, 0.45)');
-  gradient.addColorStop(1, 'rgba(59, 130, 246, 0.00)');
-
+  gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+  gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+ 
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -131,12 +131,12 @@ function renderTrendChart(trendsData) {
       datasets: [{
         label: 'Issues Reported',
         data: values,
-        borderColor: '#3B82F6',
+        borderColor: '#10B981',
         backgroundColor: gradient,
         borderWidth: 3,
         fill: true,
         tension: 0.4,
-        pointBackgroundColor: '#3B82F6',
+        pointBackgroundColor: '#10B981',
         pointBorderColor: '#ffffff',
         pointBorderWidth: 2,
         pointRadius: 5,
@@ -149,10 +149,10 @@ function renderTrendChart(trendsData) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: 'rgba(9, 15, 29, 0.95)',
+          backgroundColor: 'rgba(6, 15, 12, 0.95)',
           titleColor: '#fff',
           bodyColor: '#fff',
-          borderColor: 'hsl(217, 33%, 20%)',
+          borderColor: 'hsl(160, 20%, 20%)',
           borderWidth: 1
         }
       },
@@ -162,15 +162,15 @@ function renderTrendChart(trendsData) {
           ticks: { 
             stepSize: 1, 
             precision: 0,
-            color: 'hsl(215, 20%, 75%)'
+            color: 'hsl(160, 12%, 65%)'
           },
           grid: {
-            color: 'rgba(255, 255, 255, 0.05)'
+            color: 'rgba(255, 255, 255, 0.03)'
           }
         },
         x: {
           ticks: {
-            color: 'hsl(215, 20%, 75%)'
+            color: 'hsl(160, 12%, 65%)'
           },
           grid: {
             display: false
@@ -188,13 +188,13 @@ function renderCategoryChart(categoryData) {
   const values = categoryData.map(c => c.count);
 
   const colors = [
-    '#3B82F6', // Blue
-    '#EAB308', // Yellow
-    '#EF4444', // Red
-    '#10B981', // Green
+    '#10B981', // Emerald
+    '#06B6D4', // Teal/Cyan
+    '#14B8A6', // Turquoise
+    '#EAB308', // Amber
+    '#F97316', // Orange
     '#8B5CF6', // Purple
-    '#EC4899', // Pink
-    '#F97316'  // Orange
+    '#EF4444'  // Red
   ];
 
   new Chart(ctx, {
@@ -238,7 +238,7 @@ function renderPriorityChart(priorityData) {
   
   const colors = [
     '#9CA3AF', // Low: Gray
-    '#3B82F6', // Medium: Blue
+    '#06B6D4', // Medium: Teal/Cyan
     '#F97316', // High: Orange
     '#EF4444'  // Critical: Red
   ];

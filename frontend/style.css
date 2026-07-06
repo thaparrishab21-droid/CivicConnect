@@ -6,33 +6,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Color Palette - Premium Slate Navy */
-  --bg-primary: hsl(222, 47%, 9%);
-  --bg-secondary: hsl(223, 47%, 14%);
-  --bg-tertiary: hsl(223, 47%, 18%);
+  /* Color Palette - Premium Slate Forest */
+  --bg-primary: hsl(160, 24%, 6%);
+  --bg-secondary: hsl(160, 24%, 10%);
+  --bg-tertiary: hsl(160, 24%, 14%);
   
-  --primary: hsl(217, 91%, 60%);
-  --primary-hover: hsl(217, 91%, 66%);
-  --primary-glow: rgba(59, 130, 246, 0.25);
+  --primary: hsl(150, 84%, 38%);
+  --primary-hover: hsl(150, 84%, 44%);
+  --primary-glow: rgba(16, 185, 129, 0.2);
   
   --accent-teal: hsl(172, 90%, 46%);
   --accent-teal-glow: rgba(20, 184, 166, 0.15);
   
-  --text-main: hsl(210, 40%, 98%);
-  --text-muted: hsl(215, 20%, 65%);
-  --text-inverse: hsl(222, 47%, 9%);
+  --text-main: hsl(150, 20%, 98%);
+  --text-muted: hsl(160, 12%, 65%);
+  --text-inverse: hsl(160, 24%, 6%);
   
   /* Status Colors */
   --status-pending: hsl(38, 92%, 50%);
   --status-progress: hsl(200, 95%, 48%);
-  --status-resolved: hsl(142, 72%, 43%);
+  --status-resolved: hsl(150, 84%, 38%);
   
   --status-pending-bg: rgba(245, 158, 11, 0.08);
   --status-progress-bg: rgba(59, 130, 246, 0.08);
   --status-resolved-bg: rgba(16, 185, 129, 0.08);
   
-  --border-color: hsl(217, 33%, 17%);
-  --border-color-hover: hsl(217, 33%, 25%);
+  --border-color: hsl(160, 20%, 15%);
+  --border-color-hover: hsl(160, 20%, 22%);
   
   /* Layout Transitions */
   --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -57,8 +57,8 @@ body {
   font-family: var(--font-body);
   background-color: var(--bg-primary);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.03) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.02) 0px, transparent 50%);
   color: var(--text-main);
   min-height: 100vh;
   line-height: 1.6;
@@ -156,7 +156,7 @@ a {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.25), transparent);
   opacity: 0;
   transition: var(--transition-smooth);
 }
@@ -295,11 +295,19 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /* Landing Page Specific Redesigns */
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 5rem 0;
+}
+
 .hero {
-  text-align: center;
-  padding: 5rem 1rem 3rem 1rem;
-  max-width: 800px;
-  margin: 0 auto;
+  text-align: left;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
 }
 
 .hero-tagline {
@@ -319,9 +327,9 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .hero h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 1.5rem;
   background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
   -webkit-background-clip: text;
@@ -333,9 +341,39 @@ input[type="file"]::file-selector-button:hover {
   font-size: 1.15rem;
   color: var(--text-muted);
   margin-bottom: 2.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-mockup {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  border-top-color: rgba(16, 185, 129, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-glow-bg {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .landing-grid {
@@ -359,7 +397,12 @@ input[type="file"]::file-selector-button:hover {
 /* Auth Cards & Center Screens */
 .auth-container {
   max-width: 440px;
-  margin: 3rem auto;
+  margin: 4rem auto;
+}
+
+.auth-container .card {
+  border-top: 3px solid var(--primary);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(16, 185, 129, 0.03);
 }
 
 .auth-header {
@@ -393,6 +436,14 @@ input[type="file"]::file-selector-button:hover {
   display: flex;
   align-items: center;
   gap: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-color-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .stat-icon-wrapper {
@@ -680,11 +731,23 @@ input[type="file"]::file-selector-button:hover {
     justify-content: center;
     gap: 1rem;
   }
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 3rem 0;
+  }
+  .hero {
+    text-align: center;
+  }
   .hero h1 {
     font-size: 2.25rem;
   }
   .hero p {
     font-size: 1rem;
+    text-align: center;
+  }
+  .hero-mockup {
+    max-width: 100%;
   }
   .container {
     width: 95%;

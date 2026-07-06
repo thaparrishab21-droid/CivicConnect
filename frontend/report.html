@@ -42,84 +42,100 @@
         <div id="alert-box" style="display: none;"></div>
 
         <form id="report-form" enctype="multipart/form-data">
-          <div class="form-group">
-            <label class="form-label" for="issue-title">Issue Title</label>
-            <input type="text" id="issue-title" class="form-control" placeholder="e.g. Huge Pothole on Main Road" required>
-          </div>
-
-          <div class="form-group">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-              <label class="form-label" for="issue-desc" style="margin-bottom: 0;">Detailed Description</label>
-              <button type="button" id="ai-assist-btn" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.8rem; margin: 0; display: flex; align-items: center; gap: 0.3rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; color: var(--primary-color);">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                AI Assist
-              </button>
+          <!-- Step/Section 1: Ticket Details -->
+          <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-teal-glow); font-size: 0.75rem; color: var(--accent-teal); font-family: var(--font-heading);">1</span>
+              Complaint Details
+            </h3>
+            
+            <div class="form-group">
+              <label class="form-label" for="issue-title">Issue Title</label>
+              <input type="text" id="issue-title" class="form-control" placeholder="e.g. Huge Pothole on Main Road" required>
             </div>
-            <textarea id="issue-desc" class="form-control" rows="4" placeholder="Describe the problem, severity, and any landmarks..." required></textarea>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label" for="issue-category">Category</label>
-            <select id="issue-category" class="form-control" required>
-              <option value="" disabled selected>Select category</option>
-              <option value="Pothole">Pothole</option>
-              <option value="Garbage Dump">Garbage Dump</option>
-              <option value="Water Leakage">Water Leakage</option>
-              <option value="Broken Streetlight">Broken Streetlight</option>
-              <option value="Drainage Issue">Drainage Issue</option>
-              <option value="Damaged Road">Damaged Road</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="issue-priority">Priority Level</label>
-            <select id="issue-priority" class="form-control" required>
-              <option value="Low">Low</option>
-              <option value="Medium" selected>Medium</option>
-              <option value="High">High</option>
-              <option value="Critical">Critical</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="issue-location">Location / Landmark</label>
-            <input type="text" id="issue-location" class="form-control" placeholder="e.g. Opposite State Bank, Sector 4" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Map Location (Click map or use button to set coordinates)</label>
-            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-              <button type="button" id="btn-detect-gps" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="12" r="3"></circle>
-                  <line x1="12" y1="1" x2="12" y2="3"></line>
-                  <line x1="12" y1="21" x2="12" y2="23"></line>
-                  <line x1="1" y1="12" x2="3" y2="12"></line>
-                  <line x1="21" y1="12" x2="23" y2="12"></line>
-                </svg>
-                Detect GPS Location
-              </button>
-              <span id="gps-status" style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center;">Not set</span>
-            </div>
-            <div id="report-map" style="height: 250px; border-radius: 8px; border: 1px solid var(--border-color); background: #eee; margin-bottom: 0.5rem;"></div>
-            <div style="display: flex; gap: 1rem;">
-              <div style="flex: 1;">
-                <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Latitude</label>
-                <input type="text" id="issue-lat" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <label class="form-label" for="issue-desc" style="margin-bottom: 0;">Detailed Description</label>
+                <button type="button" id="ai-assist-btn" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.8rem; margin: 0; display: flex; align-items: center; gap: 0.3rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; color: var(--primary-color);">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                  AI Assist
+                </button>
               </div>
-              <div style="flex: 1;">
-                <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Longitude</label>
-                <input type="text" id="issue-lng" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
-              </div>
+              <textarea id="issue-desc" class="form-control" rows="4" placeholder="Describe the problem, severity, and any landmarks..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="issue-category">Category</label>
+              <select id="issue-category" class="form-control" required>
+                <option value="" disabled selected>Select category</option>
+                <option value="Pothole">Pothole</option>
+                <option value="Garbage Dump">Garbage Dump</option>
+                <option value="Water Leakage">Water Leakage</option>
+                <option value="Broken Streetlight">Broken Streetlight</option>
+                <option value="Drainage Issue">Drainage Issue</option>
+                <option value="Damaged Road">Damaged Road</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="issue-priority">Priority Level</label>
+              <select id="issue-priority" class="form-control" required>
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="issue-image">Upload Photo (Optional, Max 5MB)</label>
-            <input type="file" id="issue-image" class="form-control" accept="image/*">
+          <!-- Step/Section 2: Location & Media -->
+          <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-teal-glow); font-size: 0.75rem; color: var(--accent-teal); font-family: var(--font-heading);">2</span>
+              Location & Photo
+            </h3>
+
+            <div class="form-group">
+              <label class="form-label" for="issue-location">Location / Landmark</label>
+              <input type="text" id="issue-location" class="form-control" placeholder="e.g. Opposite State Bank, Sector 4" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Map Location (Click map or use button to set coordinates)</label>
+              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <button type="button" id="btn-detect-gps" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                  </svg>
+                  Detect GPS Location
+                </button>
+                <span id="gps-status" style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center;">Not set</span>
+              </div>
+              <div id="report-map" style="height: 250px; border-radius: 8px; border: 1px solid var(--border-color); background: #eee; margin-bottom: 0.5rem;"></div>
+              <div style="display: flex; gap: 1rem;">
+                <div style="flex: 1;">
+                  <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Latitude</label>
+                  <input type="text" id="issue-lat" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
+                </div>
+                <div style="flex: 1;">
+                  <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Longitude</label>
+                  <input type="text" id="issue-lng" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="issue-image">Upload Photo (Optional, Max 5MB)</label>
+              <input type="file" id="issue-image" class="form-control" accept="image/*">
+            </div>
           </div>
 
           <!-- Custom Duplicate Warning Box (Production-grade UX) -->
