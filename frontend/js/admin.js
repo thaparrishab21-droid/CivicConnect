@@ -117,6 +117,11 @@ async function fetchAdminIssues(status = '', category = '') {
       if (issue.status === 'In Progress') badgeClass = 'badge-in-progress';
       if (issue.status === 'Resolved') badgeClass = 'badge-resolved';
       
+      let priorityClass = 'priority-low';
+      if (issue.priority === 'Medium') priorityClass = 'priority-medium';
+      if (issue.priority === 'High') priorityClass = 'priority-high';
+      if (issue.priority === 'Critical') priorityClass = 'priority-critical';
+      
       const reportDate = new Date(issue.created_at).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
@@ -139,7 +144,10 @@ async function fetchAdminIssues(status = '', category = '') {
           ${imageHTML}
           <div class="issue-header">
             <h3 class="issue-title">${escapeHTML(issue.title)}</h3>
-            <span class="status-badge ${badgeClass}" id="badge-${issue.id}">${issue.status}</span>
+            <div style="display: flex; gap: 0.4rem; align-items: center;">
+              <span class="priority-badge ${priorityClass}">${issue.priority || 'Medium'}</span>
+              <span class="status-badge ${badgeClass}" id="badge-${issue.id}">${issue.status}</span>
+            </div>
           </div>
           <p class="issue-desc">${escapeHTML(issue.description)}</p>
           
@@ -165,9 +173,18 @@ async function fetchAdminIssues(status = '', category = '') {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               <span><strong>Reporter:</strong> ${escapeHTML(issue.reporter_name)}</span>
             </div>
+            ${issue.latitude && issue.longitude ? `
+            <div class="issue-meta-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color);"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+              <span><strong>Coords:</strong> ${issue.latitude.toFixed(4)}, ${issue.longitude.toFixed(4)}</span>
+            </div>` : ''}
             <div class="issue-meta-item">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               <span><strong>Date:</strong> ${reportDate}</span>
+            </div>
+            <div class="issue-meta-item" style="color: #10B981; font-weight: 600;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="fill: rgba(16, 185, 129, 0.15);"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+              <span>${issue.support_count || 0} Citizens Supported</span>
             </div>
           </div>
         </div>

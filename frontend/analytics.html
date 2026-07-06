@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Analytics & Trends</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <a href="dashboard.html" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
+      </svg>
+      CivicConnect Analytics
+    </a>
+    <nav class="nav-links">
+      <span id="welcome-message" style="font-weight: 500;">Welcome</span>
+      <a href="dashboard.html" id="back-dashboard-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 3px;">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to Dashboard
+      </a>
+      <button id="logout-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+        Logout
+      </button>
+    </nav>
+  </header>
+
+  <main class="container fade-in" style="max-width: 1200px; padding: 2rem 1rem;">
+    <div style="margin-bottom: 2rem;">
+      <h2>Civic Performance & Analytics</h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.3rem;">
+        Track resolution rates, categories reported, monthly volume, and priority allocations.
+      </p>
+    </div>
+
+    <!-- Alert Notification Panel -->
+    <div id="alert-box" style="display: none;"></div>
+
+    <!-- Metrics Cards Grid -->
+    <div class="dashboard-stats-grid" style="margin-bottom: 2rem;">
+      <!-- Total -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Complaints</span>
+          <span class="stat-val" id="stats-total">0</span>
+        </div>
+      </div>
+      <!-- Pending -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper pending">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Pending Issues</span>
+          <span class="stat-val" id="stats-pending">0</span>
+        </div>
+      </div>
+      <!-- In Progress -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper progress">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">In Progress</span>
+          <span class="stat-val" id="stats-progress">0</span>
+        </div>
+      </div>
+      <!-- Resolved -->
+      <div class="stat-card">
+        <div class="stat-icon-wrapper resolved">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Resolved Issues</span>
+          <span class="stat-val" id="stats-resolved">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Layout Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+      
+      <!-- Trend Line Chart -->
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Monthly Reporting Volume</h3>
+        <div style="position: relative; height: 320px;">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Categories Pie Chart -->
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Complaints by Category</h3>
+        <div style="position: relative; height: 320px;">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Priority Distribution Bar Chart -->
+      <div class="card" style="padding: 1.5rem; grid-column: 1 / -1;">
+        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Priority Distribution Share</h3>
+        <div style="position: relative; height: 280px;">
+          <canvas id="priorityChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom Analytics scripts -->
+  <script src="js/analytics.js"></script>
+</body>
+</html>

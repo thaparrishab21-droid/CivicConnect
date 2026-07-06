@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicConnect - Interactive Map</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <a href="dashboard.html" class="nav-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
+      </svg>
+      CivicConnect Map
+    </a>
+    <nav class="nav-links">
+      <span id="welcome-message" style="font-weight: 500;">Welcome</span>
+      <a href="dashboard.html" id="back-dashboard-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 3px;">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to Dashboard
+      </a>
+      <button id="logout-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+        Logout
+      </button>
+    </nav>
+  </header>
+
+  <main class="container fade-in" style="max-width: 1200px; padding: 2rem 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2>Interactive Community Map</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.3rem;">
+          View reported issues pinned across the city. Click on any pin to view category, description, and status.
+        </p>
+      </div>
+      
+      <!-- Filter on Map -->
+      <div style="display: flex; gap: 0.8rem; align-items: center;">
+        <select id="map-filter-category" class="form-control" style="width: auto; padding: 0.5rem 2.5rem 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 0;">
+          <option value="">All Categories</option>
+          <option value="Pothole">Pothole</option>
+          <option value="Garbage Dump">Garbage Dump</option>
+          <option value="Water Leakage">Water Leakage</option>
+          <option value="Broken Streetlight">Broken Streetlight</option>
+          <option value="Drainage Issue">Drainage Issue</option>
+          <option value="Damaged Road">Damaged Road</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Alert Notification Panel -->
+    <div id="alert-box" style="display: none;"></div>
+
+    <!-- Interactive Map Container -->
+    <div class="card" style="padding: 0.5rem; overflow: hidden; border-radius: 16px;">
+      <div id="community-map" style="height: 600px; border-radius: 12px; background: #eaeaea; z-index: 1;"></div>
+    </div>
+  </main>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="js/map-view.js"></script>
+</body>
+</html>
