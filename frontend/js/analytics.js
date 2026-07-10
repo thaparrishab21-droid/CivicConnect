@@ -2,12 +2,12 @@
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
-// Configure Chart.js global defaults for dark theme visibility
+// Configure Chart.js global defaults for light theme
 if (typeof Chart !== 'undefined') {
-  Chart.defaults.color = 'hsl(160, 12%, 65%)'; // Light slate-green text
-  Chart.defaults.borderColor = 'hsl(160, 20%, 15%)'; // Grid line border color
-  Chart.defaults.plugins.legend.labels.color = 'hsl(150, 20%, 98%)'; // Legend labels
-  Chart.defaults.plugins.title.color = 'hsl(150, 20%, 98%)'; // Title
+  Chart.defaults.color = '#434655'; // on-surface-variant
+  Chart.defaults.borderColor = '#e5eeff'; // surface-container
+  Chart.defaults.plugins.legend.labels.color = '#0b1c30'; // on-background
+  Chart.defaults.plugins.title.color = '#0b1c30'; // on-background
 }
 
 
@@ -20,31 +20,37 @@ if (!token || !user) {
   window.location.href = 'login.html';
 }
 
-// 2. Adjust navigation based on role
-const backBtn = document.getElementById('back-dashboard-btn');
-if (backBtn && user.role === 'admin') {
-  backBtn.href = 'admin.html';
-}
-
-const welcomeMsg = document.getElementById('welcome-message');
-if (welcomeMsg) {
-  welcomeMsg.innerText = `Welcome, ${user.name}${user.role === 'admin' ? ' (Admin)' : ''}`;
-}
-
-// Handle Logout
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = 'login.html';
-  });
-}
+// 2. Populate TopBar user info
+document.addEventListener('DOMContentLoaded', () => {
+  const nameTop = document.getElementById('user-name-top');
+  const roleTop = document.getElementById('user-role-top');
+  const avatarEl = document.getElementById('user-avatar-placeholder');
+  if (user) {
+    if (nameTop) nameTop.innerText = user.name;
+    if (roleTop) roleTop.innerText = user.role === 'admin' ? 'Administrator' : 'Verified Citizen';
+    if (avatarEl) {
+      avatarEl.innerText = user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    }
+  }
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    });
+  }
+});
 
 // Helper to show alert messages
 function showNotification(message, type = 'danger') {
   const alertBox = document.getElementById('alert-box');
   if (alertBox) {
-    alertBox.className = `alert alert-${type}`;
+    alertBox.className = 'p-4 rounded-xl border text-sm font-semibold transition-all duration-300';
+    if (type === 'success') {
+      alertBox.classList.add('bg-green-50', 'text-green-800', 'border-green-200');
+    } else {
+      alertBox.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
+    }
     alertBox.innerText = message;
     alertBox.style.display = 'block';
   }
@@ -149,11 +155,13 @@ function renderTrendChart(trendsData) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: 'rgba(6, 15, 12, 0.95)',
-          titleColor: '#fff',
-          bodyColor: '#fff',
-          borderColor: 'hsl(160, 20%, 20%)',
-          borderWidth: 1
+          backgroundColor: '#0b1c30',
+          titleColor: '#ffffff',
+          bodyColor: '#dce9ff',
+          borderColor: '#004ac6',
+          borderWidth: 1,
+          padding: 10,
+          cornerRadius: 8
         }
       },
       scales: {
@@ -162,15 +170,15 @@ function renderTrendChart(trendsData) {
           ticks: { 
             stepSize: 1, 
             precision: 0,
-            color: 'hsl(160, 12%, 65%)'
+            color: '#434655'
           },
           grid: {
-            color: 'rgba(255, 255, 255, 0.03)'
+            color: '#e5eeff'
           }
         },
         x: {
           ticks: {
-            color: 'hsl(160, 12%, 65%)'
+            color: '#434655'
           },
           grid: {
             display: false

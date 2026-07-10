@@ -1,161 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CivicConnect - Report and Track Local Issues</title>
-  <link rel="stylesheet" href="style.css">
+  <title>CivicConnect - Empowering Communities</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-primary-fixed": "#00174b",
+              "surface": "#f8f9ff",
+              "primary-fixed": "#dbe1ff",
+              "on-error-container": "#93000a",
+              "surface-dim": "#cbdbf5",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-error": "#ffffff",
+              "on-surface-variant": "#434655",
+              "surface-container-highest": "#d3e4fe",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#b4c5ff",
+              "primary": "#004ac6",
+              "surface-container-high": "#dce9ff",
+              "surface-tint": "#0053db",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#00714d",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed": "#6ffbbe",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffddb8",
+              "on-secondary-fixed-variant": "#005236",
+              "error": "#ba1a1a",
+              "inverse-on-surface": "#eaf1ff",
+              "inverse-primary": "#b4c5ff",
+              "on-secondary-fixed": "#002113",
+              "primary-container": "#2563eb",
+              "on-tertiary-container": "#ffeedd",
+              "tertiary": "#784b00",
+              "surface-variant": "#d3e4fe",
+              "tertiary-container": "#996100",
+              "surface-container": "#e5eeff",
+              "inverse-surface": "#213145",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-tertiary-fixed": "#2a1700",
+              "background": "#f8f9ff",
+              "outline": "#737686",
+              "on-tertiary-fixed-variant": "#653e00",
+              "tertiary-fixed-dim": "#ffb95f",
+              "on-background": "#0b1c30",
+              "surface-bright": "#f8f9ff",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#6cf8bb",
+              "secondary": "#006c49",
+              "on-surface": "#0b1c30",
+              "outline-variant": "#c3c6d7"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "16px",
+              "full": "9999px"
+            },
+            "spacing": {
+              "margin-mobile": "16px",
+              "stack-md": "16px",
+              "gutter": "24px",
+              "margin-desktop": "40px",
+              "stack-lg": "24px",
+              "stack-xs": "4px",
+              "stack-sm": "8px",
+              "stack-xl": "48px",
+              "unit": "4px",
+              "container-max": "1280px"
+            },
+            "fontFamily": {
+              "headline-lg-mobile": ["Geist"],
+              "headline-lg": ["Geist"],
+              "label-md": ["Geist"],
+              "display-lg": ["Geist"],
+              "label-sm": ["Geist"],
+              "body-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "headline-md": ["Geist"]
+            },
+            "fontSize": {
+              "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+              "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+              "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600" }],
+              "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+              "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+              "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+            }
+          }
+        }
+      }
+    } catch (_e) { }
+  </script>
+  <meta charset="utf-8">
 </head>
+<body class="bg-background text-on-background overflow-x-hidden">
 
-<body>
-
-  <!-- Navigation Bar -->
-  <header class="navbar">
-    <div class="nav-logo">
-      <!-- Building Icon SVG -->
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
-      </svg>
-      CivicConnect
+  <!-- TopNavBar -->
+  <header class="sticky top-0 z-50 flex justify-between items-center w-full px-4 md:px-margin-desktop h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+    <div class="flex items-center gap-stack-sm">
+      <span class="text-headline-md font-headline-md font-bold text-primary dark:text-inverse-primary">CivicConnect</span>
     </div>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link active">Home</a>
-      <a href="login.html" class="btn btn-secondary">Login</a>
-      <a href="register.html" class="btn btn-primary">Register</a>
+    <nav class="hidden lg:flex items-center gap-gutter">
+      <a href="#how-it-works" class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-body-md font-body-md">How it Works</a>
+      <a href="#features" class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-body-md font-body-md">Features</a>
+      <a href="login.html?portal=admin" class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-body-md font-body-md">Admin Portal</a>
     </nav>
+    <div class="flex items-center gap-stack-md">
+      <div class="hidden sm:flex items-center gap-stack-sm">
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container rounded-full transition-all">notifications</button>
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container rounded-full transition-all">help</button>
+      </div>
+      <button id="nav-signin-btn" class="hidden md:block px-6 py-2 rounded-lg bg-surface-container-high text-on-surface font-label-md hover:bg-surface-container-highest transition-all">Sign In</button>
+      <button id="nav-report-btn" class="px-6 py-2 rounded-lg bg-primary text-on-primary font-label-md hover:opacity-80 transition-opacity active:scale-95 duration-100">Report Issue</button>
+    </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="container fade-in">
-    <div class="hero-container">
-      <section class="hero">
-        <span class="hero-tagline">
-          <!-- Shield Icon SVG -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; margin-right: 0.1rem;">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          Empowering Communities
-        </span>
-        <h1>Bridge the gap between Citizens & Authorities</h1>
-        <p>
-          See a pothole? Broken streetlights? Garbage accumulation? Report it on CivicConnect.
-          Track its progress in real-time as local authorities resolve the issue.
-        </p>
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-          <a href="register.html" class="btn btn-primary">
-            Report an Issue Now
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; margin-left: 0.3rem;">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a href="login.html?portal=admin" class="btn btn-secondary">Admin Portal</a>
+  <main class="max-w-[1280px] mx-auto">
+    <!-- Hero Section -->
+    <section class="relative min-h-[calc(100vh-64px)] flex items-center px-margin-mobile md:px-margin-desktop py-stack-xl overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center w-full">
+        <div class="lg:col-span-6 z-10">
+          <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary-fixed text-on-primary-fixed text-label-sm mb-stack-lg">
+            <span class="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+            New: Direct-to-Council API Integration
+          </div>
+          <h1 class="font-headline-lg text-display-lg md:text-[64px] leading-tight text-on-background mb-stack-lg">
+            Building Better Communities, <span class="text-primary">Together.</span>
+          </h1>
+          <p class="text-body-lg text-on-surface-variant mb-stack-xl max-w-xl">
+            A modern, efficient platform for citizens to report infrastructure issues, track resolutions in real-time, and foster institutional transparency.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-stack-md">
+            <button id="hero-report-btn" class="px-8 py-4 bg-primary text-on-primary font-label-md text-lg rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all active:scale-95">
+              Report an Issue
+            </button>
+            <button id="hero-explore-btn" class="px-8 py-4 bg-white border border-outline-variant text-on-surface font-label-md text-lg rounded-2xl hover:bg-surface-container-low transition-all">
+              Explore Active Reports
+            </button>
+          </div>
+          <div class="mt-stack-xl flex items-center gap-stack-md">
+            <div class="flex -space-x-4">
+              <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-slate-200">
+                <img class="w-full h-auto" alt="Female city official" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdPWb45ijYwM1DaN-2VO-jpZN41NxBxHQRzPnra9hvAXz5zsyhlKcpCToEVKG0tc4o8h9bo_uFdee9sUOM3E_AFP7poaDvzl_4buzShSwZ0VFKXERYE85u71a2z0Tepwt78JIre710Kl7ZlK8T1aOsg4MHfBNk1o22KpAGWPfyTiPXO3uULqSoNa-zzmRGUwN4Td9mTWC7IIk1SGXMFergx2L0xqk_4RMEIaLs6amUVbFpkVkWdb-VircAHdCuOTa8WwB29rqwErWB">
+              </div>
+              <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-slate-200">
+                <img class="w-full h-auto" alt="Male urban planner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZu_8s3A_EpzeSL9Hq3xD_He2q7zuptMNKr6I1Z_7R9oLizpGFNDRe3R2G0I64i-Mdx-QhCavQ4ajOYQhhxjOkN-fc6VYPmECDQ14f5KQgUk6pb-Z9mXVr_7cgAtvo9iJCbHcirMetUPEVGXsddFfPhe_MqrtVP_WCvA6RKHoBXm6XCTvx_Y0ekX8lwPbZqrhVDaNAVR8VlnoWs4SklaW-Y9CjhnDh_RkEitAl2rbPudu_QQkN9PlyG6uLLeZrMetSHkr0i_5G0x_b">
+              </div>
+              <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden bg-slate-200">
+                <img class="w-full h-auto" alt="Diverse young citizen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbcZdZOvcR1ivmRcNJY8nkTDM6F7Yabu9PIvuaMC9zuY4Cuw5w8CTVI0GhhU0UUT1OKKt5chGp69beBjLHHDN8CYfkRAuhFY4NPl14nO8ggun2lhsqqy7XIonQrbZ7TgueEFfENS2X2rElMmGpvp693ARlZVXJ-o3SA5ibRBNW2xNyLLspmW2GxgCWf_sooY17Rf1HNSXUB_d_XDTU-SZlRfin6Ln7PCw5ToDYHNkPjZjoZpTi7AUWXLSz_EBW1qqUywzXpWv1RFHH">
+              </div>
+            </div>
+            <p class="text-label-md text-on-surface-variant">Trusted by 2,000+ City Officials</p>
+          </div>
         </div>
-      </section>
-      
-      <div class="hero-visual">
-        <div class="hero-glow-bg"></div>
-        <div class="hero-mockup">
-          <!-- Mockup Header -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
-            <span style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-teal);">Live Case Monitor</span>
-            <div style="display: flex; gap: 0.3rem;">
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; opacity: 0.8;"></span>
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; opacity: 0.8;"></span>
-              <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; opacity: 0.8;"></span>
-            </div>
-          </div>
-          
-          <!-- Mockup Card 1 -->
-          <div class="card" style="padding: 1rem; margin-bottom: 1rem; border-color: rgba(16, 185, 129, 0.2); background: rgba(16, 185, 129, 0.02); transform: none; box-shadow: none;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-              <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0;">Broken Streetlight on Sector 15</h4>
-              <span class="priority-badge priority-high" style="font-size: 0.65rem;">High</span>
-            </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 0.75rem;">
-              The light has been flickering since last night, creating dark spots near the local primary school.
-            </p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 0.75rem; color: var(--text-muted);">Status: <strong style="color: var(--status-progress);">In Progress</strong></span>
-              <span style="font-size: 0.7rem; color: var(--text-muted);">Updated 14 mins ago</span>
-            </div>
-          </div>
-          
-          <!-- Mockup Card 2 -->
-          <div class="card" style="padding: 1rem; border-color: var(--border-color); transform: none; box-shadow: none; background: transparent;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-              <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0;">Pothole Near Central Park Gate</h4>
-              <span class="priority-badge priority-critical" style="font-size: 0.65rem;">Critical</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 0.75rem; color: var(--text-muted);">Status: <strong style="color: var(--status-pending);">Pending</strong></span>
-              <span style="font-size: 0.7rem; color: var(--text-muted);">48 Upvotes</span>
-            </div>
+        <div class="lg:col-span-6 relative">
+          <div class="absolute -top-20 -right-20 w-[120%] h-[120%] bg-primary-fixed/20 blur-[100px] -z-10 rounded-full"></div>
+          <div class="rounded-2xl overflow-hidden shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+            <img alt="CivicConnect City Illustration" class="w-full h-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOqrXTAobOpnFYTZGgPxPsIz6j4qxZ0vFPj4eUEv0rymc9KsnzkhNHAG2G301AfBUcglX_Z3ZHwnnnpR7B2P-gSxIaUwqJXIbqDdPvYNkkJYij94j_G4n_kGNf2Hx0Kz3qNlj45aOv-gZuQAAGiVlUdjJka0aKIaFqOro2zKoxLD3h0nuvjgvxU-yS6UDsCBiKOC2KniyEgr76vEMJiS7YAk5MhlaBpbe6PvU2R8O62CiIFhv4yFqbyd5s4kkjYzs1fFuMiJMGjrhJ">
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Features Section -->
-    <section class="card" style="margin-top: 4rem;">
-      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 2.5rem;">How It Works</h2>
-      
-      <div class="landing-grid">
-
-        <!-- Card 1 -->
-        <div class="card landing-feat-card">
-          <!-- File Text Icon SVG -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">1. Report</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
-            Snap a picture of the civic issue, select a category (e.g., Pothole, Water Leakage), write a short
-            description, and add the location.
-          </p>
+    <!-- Features Section (Bento Style) -->
+    <section class="py-stack-xl px-margin-mobile md:px-margin-desktop" id="features">
+      <div class="text-center mb-stack-xl">
+        <h2 class="font-headline-lg text-headline-lg mb-stack-md text-on-background">Empowering Local Governance</h2>
+        <p class="text-body-lg text-on-surface-variant max-w-2xl mx-auto">Our toolkit bridges the gap between community needs and administrative action.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter h-auto md:h-[500px]">
+        <div class="md:col-span-1 border border-outline-variant p-stack-lg rounded-2xl flex flex-col justify-between bg-surface-container-low group cursor-pointer hover:shadow-xl transition-all">
+          <div class="mb-stack-lg">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-sm flex items-center justify-center mb-stack-lg overflow-hidden">
+              <img alt="Report" class="w-32 h-auto max-w-none transform -translate-x-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGoeUt10IK3BU6hX8BWN2-ocMnKFbDIae3Qs8ATsVuyE2DB-RTA_aZBlJU_1dU0ITrvRqXKHLDze3PUzR246Rge63YVOFiIxIh8RAmarnRSjS_M6DoMwCUTZVzV4joJeSIFLiDaSMYj7jBiSA5LIuMjfp-M_LF9Bk1P_U36Idl8q_F6Vu51W0xy5yh_UmoTbcI8KDHOS8uu13TY_IDLJYGRGwYgMnQlfIkdUiAwcoAVLsvNnZZUA1AAVy_ncYqIbtegkR4bEEZ80TY">
+            </div>
+            <h3 class="font-headline-md text-on-background">Instant Reporting</h3>
+            <p class="text-body-md text-on-surface-variant mt-stack-sm">GPS-tagged reports with photo evidence sent directly to the right department.</p>
+          </div>
+          <div class="flex items-center text-primary font-label-md group-hover:gap-stack-sm transition-all">
+            Learn more <span class="material-symbols-outlined ml-stack-xs">arrow_forward</span>
+          </div>
         </div>
-
-        <!-- Card 2 -->
-        <div class="card landing-feat-card">
-          <!-- Clock Icon SVG -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">2. Track</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
-            Monitor the status of your reported issues in real-time. Watch them transition from "Pending" to "In
-            Progress" and finally "Resolved".
-          </p>
+        <div class="md:col-span-1 bg-primary p-stack-lg rounded-2xl flex flex-col justify-between text-on-primary shadow-2xl relative overflow-hidden group cursor-pointer">
+          <div class="absolute -right-10 -bottom-10 opacity-20 transform group-hover:scale-125 transition-transform">
+            <span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+          </div>
+          <div class="relative z-10">
+            <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-stack-lg overflow-hidden">
+              <img alt="Track" class="w-32 h-auto max-w-none transform -translate-x-12" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGoeUt10IK3BU6hX8BWN2-ocMnKFbDIae3Qs8ATsVuyE2DB-RTA_aZBlJU_1dU0ITrvRqXKHLDze3PUzR246Rge63YVOFiIxIh8RAmarnRSjS_M6DoMwCUTZVzV4joJeSIFLiDaSMYj7jBiSA5LIuMjfp-M_LF9Bk1P_U36Idl8q_F6Vu51W0xy5yh_UmoTbcI8KDHOS8uu13TY_IDLJYGRGwYgMnQlfIkdUiAwcoAVLsvNnZZUA1AAVy_ncYqIbtegkR4bEEZ80TY">
+            </div>
+            <h3 class="font-headline-md">Real-Time Tracking</h3>
+            <p class="text-body-md opacity-90 mt-stack-sm">Never wonder about status again. Receive automated updates at every stage of the repair process.</p>
+          </div>
+          <div class="relative z-10 flex items-center font-label-md group-hover:gap-stack-sm transition-all">
+            Track an issue <span class="material-symbols-outlined ml-stack-xs">arrow_forward</span>
+          </div>
         </div>
-
-        <!-- Card 3 -->
-        <div class="card landing-feat-card">
-          <!-- Shield Check Icon SVG -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            <polyline points="9 11 11 13 15 9"></polyline>
-          </svg>
-          <h3 style="margin-bottom: 0.8rem; font-size: 1.25rem;">3. Resolve</h3>
-          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
-            Admins assign maintenance personnel to resolve issues and update the status on the portal, keeping the
-            community clean and safe.
-          </p>
+        <div class="md:col-span-1 border border-outline-variant p-stack-lg rounded-2xl flex flex-col justify-between bg-surface-container-low group cursor-pointer hover:shadow-xl transition-all">
+          <div class="mb-stack-lg">
+            <div class="w-16 h-16 bg-white rounded-xl shadow-sm flex items-center justify-center mb-stack-lg overflow-hidden">
+              <img alt="Resolve" class="w-32 h-auto max-w-none transform -translate-x-24" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGoeUt10IK3BU6hX8BWN2-ocMnKFbDIae3Qs8ATsVuyE2DB-RTA_aZBlJU_1dU0ITrvRqXKHLDze3PUzR246Rge63YVOFiIxIh8RAmarnRSjS_M6DoMwCUTZVzV4joJeSIFLiDaSMYj7jBiSA5LIuMjfp-M_LF9Bk1P_U36Idl8q_F6Vu51W0xy5yh_UmoTbcI8KDHOS8uu13TY_IDLJYGRGwYgMnQlfIkdUiAwcoAVLsvNnZZUA1AAVy_ncYqIbtegkR4bEEZ80TY">
+            </div>
+            <h3 class="font-headline-md text-on-background">Community Resolution</h3>
+            <p class="text-body-md text-on-surface-variant mt-stack-sm">Closing the loop with verification photos and citizen satisfaction ratings.</p>
+          </div>
+          <div class="flex items-center text-primary font-label-md group-hover:gap-stack-sm transition-all">
+            View impact <span class="material-symbols-outlined ml-stack-xs">arrow_forward</span>
+          </div>
         </div>
+      </div>
+    </section>
 
+    <!-- How It Works -->
+    <section class="py-stack-xl px-margin-mobile md:px-margin-desktop bg-surface-container-lowest" id="how-it-works">
+      <div class="flex flex-col lg:flex-row gap-stack-xl items-center">
+        <div class="lg:w-1/2">
+          <h2 class="font-headline-lg text-display-lg text-on-background mb-stack-lg">Institutional Modernity in 3 Steps.</h2>
+          <div class="space-y-stack-xl mt-stack-xl">
+            <div class="flex gap-stack-lg items-start">
+              <div class="w-12 h-12 shrink-0 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center font-bold text-xl">1</div>
+              <div>
+                <h4 class="font-headline-md text-on-background">Snap &amp; Report</h4>
+                <p class="text-body-md text-on-surface-variant mt-stack-xs">See a pothole or broken streetlight? Take a photo, and our AI categorizes the issue automatically for the city council.</p>
+              </div>
+            </div>
+            <div class="flex gap-stack-lg items-start">
+              <div class="w-12 h-12 shrink-0 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center font-bold text-xl">2</div>
+              <div>
+                <h4 class="font-headline-md text-on-background">Track Progress</h4>
+                <p class="text-body-md text-on-surface-variant mt-stack-xs">Watch your report move from 'Received' to 'Assigned' to 'In Progress'. Get a notification when the crew is on-site.</p>
+              </div>
+            </div>
+            <div class="flex gap-stack-lg items-start">
+              <div class="w-12 h-12 shrink-0 bg-surface-container-highest text-on-surface rounded-full flex items-center justify-center font-bold text-xl">3</div>
+              <div>
+                <h4 class="font-headline-md text-on-background">Community Impact</h4>
+                <p class="text-body-md text-on-surface-variant mt-stack-xs">See how your reporting contributes to your neighborhood's health score and collective improvement goals.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:w-1/2 bg-white p-8 rounded-2xl shadow-xl border border-outline-variant relative">
+          <div class="flex items-center justify-between mb-stack-lg border-b border-outline-variant pb-stack-sm">
+            <div class="flex items-center gap-stack-sm">
+              <span class="material-symbols-outlined text-primary">pin_drop</span>
+              <span class="font-label-md">Active Issue: 124 Oak St</span>
+            </div>
+            <span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm">In Progress</span>
+          </div>
+          <div class="h-64 rounded-xl mb-stack-lg bg-slate-100 overflow-hidden relative">
+            <img class="w-full h-full object-cover" alt="Map Interface mockup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_a0v50Bo0_RKhUjwWiQu-lcZS-wBNVvtXl3h1YWYTjSIk-fIM24pa2nX6CJAk-EsU5sgBcX2ELo_hqvNK01NHttLHNFzWuybs6G7UbzswA5pkkFYO2y1ia57JWXnFNf7lOdpEue_wZs4xKCdfQ6w7IACQi-Br-DDMMfneqk_-PCjJ9ilHPwGraHOVN0GBA3R1EWbToBKLonH4DnkKABHphqmWpn4gnfMjGK3vpJY5nCLpjqEvXdmYem-NdMFYgmEEz473AjCS2Bo2">
+            <div class="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent"></div>
+          </div>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center text-label-sm">
+              <span>Repair Progress</span>
+              <span class="font-bold">65%</span>
+            </div>
+            <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+              <div class="h-full bg-primary w-[65%] rounded-full"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer style="text-align: center; padding: 4rem 1rem 2rem 1rem; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); margin-top: 6rem;">
-    &copy; 2026 CivicConnect. Built to improve city maintenance and transparency.
+  <!-- Footer -->
+  <footer class="w-full py-stack-xl px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter bg-surface-container-highest dark:bg-on-background border-t border-outline-variant">
+    <div class="flex flex-col items-center md:items-start gap-stack-sm">
+      <span class="text-label-md font-headline-md text-on-surface font-bold">CivicConnect</span>
+      <p class="text-label-sm text-on-surface-variant max-w-xs text-center md:text-left">© 2026 CivicConnect. Institutional Modernity for Citizens.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-gutter">
+      <a class="text-on-surface-variant text-label-sm hover:underline transition-all hover:text-primary" href="#">Privacy Policy</a>
+      <a class="text-on-surface-variant text-label-sm hover:underline transition-all hover:text-primary" href="#">Terms of Service</a>
+      <a class="text-on-surface-variant text-label-sm hover:underline transition-all hover:text-primary" href="#">Contact</a>
+      <a class="text-on-surface-variant text-label-sm hover:underline transition-all hover:text-primary" href="#">Accessibility</a>
+    </div>
+    <div class="flex items-center gap-stack-md">
+      <button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant hover:text-primary transition-all">
+        <span class="material-symbols-outlined">public</span>
+      </button>
+      <button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface-variant hover:text-primary transition-all">
+        <span class="material-symbols-outlined">mail</span>
+      </button>
+    </div>
   </footer>
 
-</body>
+  <script>
+    // Dynamic auth-state button routing logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user'));
+      
+      const signInBtn = document.getElementById('nav-signin-btn');
+      const reportIssueBtn = document.getElementById('nav-report-btn');
+      
+      const heroReportBtn = document.getElementById('hero-report-btn');
+      const heroExploreBtn = document.getElementById('hero-explore-btn');
+      
+      if (token && user) {
+        if (signInBtn) {
+          signInBtn.innerText = 'Dashboard';
+          signInBtn.onclick = () => {
+            window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+          };
+        }
+        if (reportIssueBtn) {
+          reportIssueBtn.onclick = () => {
+            window.location.href = 'report.html';
+          };
+        }
+        if (heroReportBtn) {
+          heroReportBtn.onclick = () => {
+            window.location.href = 'report.html';
+          };
+        }
+        if (heroExploreBtn) {
+          heroExploreBtn.onclick = () => {
+            window.location.href = 'dashboard.html';
+          };
+        }
+      } else {
+        if (signInBtn) {
+          signInBtn.onclick = () => {
+            window.location.href = 'login.html';
+          };
+        }
+        if (reportIssueBtn) {
+          reportIssueBtn.onclick = () => {
+            window.location.href = 'login.html';
+          };
+        }
+        if (heroReportBtn) {
+          heroReportBtn.onclick = () => {
+            window.location.href = 'register.html';
+          };
+        }
+        if (heroExploreBtn) {
+          heroExploreBtn.onclick = () => {
+            window.location.href = 'login.html';
+          };
+        }
+      }
 
+      // Simple scroll reveal interaction
+      const observerOptions = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
 </html>

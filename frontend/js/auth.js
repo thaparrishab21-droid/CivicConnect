@@ -6,7 +6,12 @@ const API_BASE_URL = 'http://localhost:5000/api';
 function showAlert(message, type = 'danger') {
   const alertBox = document.getElementById('alert-box');
   if (alertBox) {
-    alertBox.className = `alert alert-${type}`;
+    alertBox.className = `p-4 rounded-xl border mb-6 text-sm font-semibold transition-all duration-300`;
+    if (type === 'success') {
+      alertBox.classList.add('bg-green-50', 'text-green-800', 'border-green-200');
+    } else {
+      alertBox.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
+    }
     alertBox.innerText = message;
     alertBox.style.display = 'block';
     

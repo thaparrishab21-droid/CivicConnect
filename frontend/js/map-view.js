@@ -12,31 +12,37 @@ if (!token || !user) {
   window.location.href = 'login.html';
 }
 
-// 2. Adjust navigation based on role
-const backBtn = document.getElementById('back-dashboard-btn');
-if (backBtn && user.role === 'admin') {
-  backBtn.href = 'admin.html';
-}
-
-const welcomeMsg = document.getElementById('welcome-message');
-if (welcomeMsg) {
-  welcomeMsg.innerText = `Welcome, ${user.name}${user.role === 'admin' ? ' (Admin)' : ''}`;
-}
-
-// Handle Logout
-const logoutBtn = document.getElementById('logout-btn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = 'login.html';
-  });
-}
+// 2. Populate TopBar user info on load
+document.addEventListener('DOMContentLoaded', () => {
+  const nameTop = document.getElementById('user-name-top');
+  const roleTop = document.getElementById('user-role-top');
+  const avatarEl = document.getElementById('user-avatar-placeholder');
+  if (user) {
+    if (nameTop) nameTop.innerText = user.name;
+    if (roleTop) roleTop.innerText = user.role === 'admin' ? 'Administrator' : 'Verified Citizen';
+    if (avatarEl) {
+      avatarEl.innerText = user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    }
+  }
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = 'login.html';
+    });
+  }
+});
 
 // Helper to show alert messages
 function showNotification(message, type = 'danger') {
   const alertBox = document.getElementById('alert-box');
   if (alertBox) {
-    alertBox.className = `alert alert-${type}`;
+    alertBox.className = 'p-4 rounded-xl border text-sm font-semibold transition-all duration-300';
+    if (type === 'success') {
+      alertBox.classList.add('bg-green-50', 'text-green-800', 'border-green-200');
+    } else {
+      alertBox.classList.add('bg-red-50', 'text-red-800', 'border-red-200');
+    }
     alertBox.innerText = message;
     alertBox.style.display = 'block';
   }

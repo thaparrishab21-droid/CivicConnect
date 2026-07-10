@@ -1,189 +1,331 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CivicConnect - Report Issue</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Report Issue | CivicConnect</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
   <!-- Leaflet Map CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Theme Config -->
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-primary-fixed": "#00174b",
+              "surface": "#f8f9ff",
+              "primary-fixed": "#dbe1ff",
+              "on-error-container": "#93000a",
+              "surface-dim": "#cbdbf5",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-error": "#ffffff",
+              "on-surface-variant": "#434655",
+              "surface-container-highest": "#d3e4fe",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#b4c5ff",
+              "primary": "#004ac6",
+              "surface-container-high": "#dce9ff",
+              "surface-tint": "#0053db",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#00714d",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed": "#6ffbbe",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffddb8",
+              "on-secondary-fixed-variant": "#005236",
+              "error": "#ba1a1a",
+              "inverse-on-surface": "#eaf1ff",
+              "inverse-primary": "#b4c5ff",
+              "on-secondary-fixed": "#002113",
+              "primary-container": "#2563eb",
+              "on-tertiary-container": "#ffeedd",
+              "tertiary": "#784b00",
+              "surface-variant": "#d3e4fe",
+              "tertiary-container": "#996100",
+              "surface-container": "#e5eeff",
+              "inverse-surface": "#213145",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-tertiary-fixed": "#2a1700",
+              "background": "#f8f9ff",
+              "outline": "#737686",
+              "on-tertiary-fixed-variant": "#653e00",
+              "tertiary-fixed-dim": "#ffb95f",
+              "on-background": "#0b1c30",
+              "surface-bright": "#f8f9ff",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#6cf8bb",
+              "secondary": "#006c49",
+              "on-surface": "#0b1c30",
+              "outline-variant": "#c3c6d7"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "margin-mobile": "16px",
+              "stack-md": "16px",
+              "gutter": "24px",
+              "margin-desktop": "40px",
+              "stack-lg": "24px",
+              "stack-xs": "4px",
+              "stack-sm": "8px",
+              "stack-xl": "48px",
+              "unit": "4px",
+              "container-max": "1280px"
+            },
+            "fontFamily": {
+              "headline-lg-mobile": ["Geist"],
+              "headline-lg": ["Geist"],
+              "label-md": ["Geist"],
+              "display-lg": ["Geist"],
+              "label-sm": ["Geist"],
+              "body-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "headline-md": ["Geist"]
+            },
+            "fontSize": {
+              "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+              "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+              "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600" }],
+              "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+              "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+              "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+            }
+          },
+        },
+      }
+    } catch (_e) { }
+  </script>
+  <style>
+    body {
+      background-color: #f8f9ff;
+      color: #0b1c30;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .card-shadow {
+      box-shadow: 0px 1px 3px rgba(15, 23, 42, 0.05);
+    }
+  </style>
 </head>
-<body>
+<body class="flex min-h-screen overflow-x-hidden">
 
-  <!-- Navigation Bar -->
-  <header class="navbar">
-    <a href="dashboard.html" class="nav-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
-      </svg>
-      CivicConnect
-    </a>
-    <nav class="nav-links">
-      <a href="dashboard.html" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        Back to Dashboard
+  <!-- SideNavBar (Shared Component Identity) -->
+  <nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 p-4 gap-stack-md bg-surface-container-low border-r border-outline-variant w-64 z-50">
+    <div class="flex flex-col gap-stack-xs px-2 mb-stack-xl">
+      <h1 class="text-headline-sm font-black text-primary text-2xl">CivicConnect</h1>
+      <p class="text-label-md font-label-md text-on-surface-variant">Citizen Portal</p>
+    </div>
+    <div class="flex flex-col gap-stack-sm flex-grow">
+      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-label-md">Dashboard</span>
       </a>
-    </nav>
-  </header>
+      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">list_alt</span>
+        <span class="text-label-md">My Issues</span>
+      </a>
+      <!-- Active: Report New -->
+      <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold scale-95 transition-all cursor-pointer">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+        <span class="text-label-md">Report New</span>
+      </a>
+      <a href="analytics.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="text-label-md">Analytics</span>
+      </a>
+      <a href="map.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">map</span>
+        <span class="text-label-md">Interactive Map</span>
+      </a>
+    </div>
+    <div class="flex flex-col gap-stack-sm border-t border-outline-variant pt-stack-md">
+      <a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+        <span class="material-symbols-outlined">contact_support</span>
+        <span class="text-label-md">Support</span>
+      </a>
+      <a id="logout-btn" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-label-md">Logout</span>
+      </a>
+    </div>
+  </nav>
 
-  <!-- Report Form Card -->
-  <main class="container fade-in">
-    <div style="max-width: 600px; margin: 0 auto;">
-      <div class="card">
-        <h2 style="margin-bottom: 0.5rem;">Report a Civic Issue</h2>
-        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">
-          Provide accurate details and upload an image to help local authorities resolve the issue quickly.
-        </p>
+  <!-- Main Content Area -->
+  <main class="flex-1 md:ml-64 bg-surface min-h-screen">
+    <!-- TopBar -->
+    <header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md flex justify-between items-center px-margin-desktop h-16 border-b border-outline-variant">
+      <div class="flex-1 max-w-md">
+        <div class="text-lg font-semibold text-on-background">Report an Issue</div>
+      </div>
+      <div class="flex items-center gap-stack-lg">
+        <div class="flex items-center gap-stack-sm pl-stack-md">
+          <div class="text-right hidden sm:block">
+            <p id="user-name-top" class="text-label-md font-bold leading-tight">James Carter</p>
+            <p id="user-role-top" class="text-label-sm text-on-surface-variant leading-tight">Verified Citizen</p>
+          </div>
+          <div class="w-10 h-10 rounded-full border-2 border-primary-fixed overflow-hidden bg-slate-200">
+            <div id="user-avatar-placeholder" class="w-full h-full flex items-center justify-center bg-primary text-white font-bold uppercase text-sm">JC</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Form Canvas -->
+    <div class="p-margin-desktop max-w-[700px] mx-auto space-y-stack-xl py-8">
+      <div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant card-shadow">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-on-background">Report a Civic Issue</h2>
+          <p class="text-sm text-on-surface-variant mt-1">Provide accurate details and upload an image to help local authorities resolve the issue quickly.</p>
+        </div>
 
         <!-- Alert Notification Panel -->
-        <div id="alert-box" style="display: none;"></div>
+        <div id="alert-box" class="hidden p-4 rounded-xl border mb-6 text-sm font-semibold transition-all"></div>
 
-        <form id="report-form" enctype="multipart/form-data">
-          <!-- Step/Section 1: Ticket Details -->
-          <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.4rem;">
-              <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-teal-glow); font-size: 0.75rem; color: var(--accent-teal); font-family: var(--font-heading);">1</span>
+        <form id="report-form" enctype="multipart/form-data" class="space-y-6">
+          <!-- Step 1: Complaint Details -->
+          <div class="p-6 rounded-xl border border-outline-variant bg-surface-container-low space-y-4">
+            <h3 class="text-sm font-bold text-primary tracking-wider uppercase flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">1</span>
               Complaint Details
             </h3>
-            
-            <div class="form-group">
-              <label class="form-label" for="issue-title">Issue Title</label>
-              <input type="text" id="issue-title" class="form-control" placeholder="e.g. Huge Pothole on Main Road" required>
+
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2" for="issue-title">Issue Title</label>
+              <input type="text" id="issue-title" class="w-full border-outline-variant rounded-lg p-2.5 bg-surface-container-lowest text-body-md focus:ring-primary focus:border-primary text-sm" placeholder="e.g. Huge Pothole on Main Road" required>
             </div>
 
-            <div class="form-group">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
-                <label class="form-label" for="issue-desc" style="margin-bottom: 0;">Detailed Description</label>
-                <button type="button" id="ai-assist-btn" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.8rem; margin: 0; display: flex; align-items: center; gap: 0.3rem;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 12px; height: 12px; color: var(--primary-color);">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                  </svg>
-                  AI Assist
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-0" for="issue-desc">Detailed Description</label>
+                <button type="button" id="ai-assist-btn" class="bg-primary/5 hover:bg-primary/10 text-primary px-3 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 transition-all">
+                  <span>✨ AI Assist</span>
                 </button>
               </div>
-              <textarea id="issue-desc" class="form-control" rows="4" placeholder="Describe the problem, severity, and any landmarks..." required></textarea>
+              <textarea id="issue-desc" class="w-full border-outline-variant rounded-lg p-2.5 bg-surface-container-lowest text-body-md focus:ring-primary focus:border-primary text-sm" rows="4" placeholder="Describe the problem, severity, and any landmarks..." required></textarea>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="issue-category">Category</label>
-              <select id="issue-category" class="form-control" required>
-                <option value="" disabled selected>Select category</option>
-                <option value="Pothole">Pothole</option>
-                <option value="Garbage Dump">Garbage Dump</option>
-                <option value="Water Leakage">Water Leakage</option>
-                <option value="Broken Streetlight">Broken Streetlight</option>
-                <option value="Drainage Issue">Drainage Issue</option>
-                <option value="Damaged Road">Damaged Road</option>
-              </select>
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2" for="issue-category">Category</label>
+                <select id="issue-category" class="w-full border-outline-variant rounded-lg p-2.5 bg-surface-container-lowest text-sm focus:ring-primary focus:border-primary" required>
+                  <option value="" disabled selected>Select category</option>
+                  <option value="Pothole">Pothole</option>
+                  <option value="Garbage Dump">Garbage Dump</option>
+                  <option value="Water Leakage">Water Leakage</option>
+                  <option value="Broken Streetlight">Broken Streetlight</option>
+                  <option value="Drainage Issue">Drainage Issue</option>
+                  <option value="Damaged Road">Damaged Road</option>
+                </select>
+              </div>
 
-            <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" for="issue-priority">Priority Level</label>
-              <select id="issue-priority" class="form-control" required>
-                <option value="Low">Low</option>
-                <option value="Medium" selected>Medium</option>
-                <option value="High">High</option>
-                <option value="Critical">Critical</option>
-              </select>
+              <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2" for="issue-priority">Priority Level</label>
+                <select id="issue-priority" class="w-full border-outline-variant rounded-lg p-2.5 bg-surface-container-lowest text-sm focus:ring-primary focus:border-primary" required>
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <!-- Step/Section 2: Location & Media -->
-          <div style="background: rgba(255, 255, 255, 0.01); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.4rem;">
-              <span style="display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent-teal-glow); font-size: 0.75rem; color: var(--accent-teal); font-family: var(--font-heading);">2</span>
+          <!-- Step 2: Location & Photo -->
+          <div class="p-6 rounded-xl border border-outline-variant bg-surface-container-low space-y-4">
+            <h3 class="text-sm font-bold text-primary tracking-wider uppercase flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">2</span>
               Location & Photo
             </h3>
 
-            <div class="form-group">
-              <label class="form-label" for="issue-location">Location / Landmark</label>
-              <input type="text" id="issue-location" class="form-control" placeholder="e.g. Opposite State Bank, Sector 4" required>
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2" for="issue-location">Location / Landmark</label>
+              <input type="text" id="issue-location" class="w-full border-outline-variant rounded-lg p-2.5 bg-surface-container-lowest text-body-md focus:ring-primary focus:border-primary text-sm" placeholder="e.g. Opposite State Bank, Sector 4" required>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Map Location (Click map or use button to set coordinates)</label>
-              <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                <button type="button" id="btn-detect-gps" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem;">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                  </svg>
-                  Detect GPS Location
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Map Location (Click map or use GPS button to pin)</label>
+              <div class="flex gap-2 items-center mb-3">
+                <button type="button" id="btn-detect-gps" class="bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm transition-all">
+                  <span class="material-symbols-outlined text-sm">my_location</span> Detect GPS Location
                 </button>
-                <span id="gps-status" style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center;">Not set</span>
+                <span id="gps-status" class="text-xs font-semibold text-on-surface-variant">Not set</span>
               </div>
-              <div id="report-map" style="height: 250px; border-radius: 8px; border: 1px solid var(--border-color); background: #eee; margin-bottom: 0.5rem;"></div>
-              <div style="display: flex; gap: 1rem;">
-                <div style="flex: 1;">
-                  <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Latitude</label>
-                  <input type="text" id="issue-lat" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
+              
+              <!-- Leaflet map -->
+              <div id="report-map" class="h-64 rounded-xl border border-outline-variant overflow-hidden z-10"></div>
+              
+              <div class="grid grid-cols-2 gap-4 mt-3">
+                <div>
+                  <label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Latitude</label>
+                  <input type="text" id="issue-lat" class="w-full border-outline-variant rounded-lg p-2 bg-slate-50 text-xs font-mono" placeholder="Not set" readonly>
                 </div>
-                <div style="flex: 1;">
-                  <label class="form-label" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Longitude</label>
-                  <input type="text" id="issue-lng" class="form-control" style="font-size: 0.85rem; margin-bottom: 0;" placeholder="Not set" readonly>
+                <div>
+                  <label class="block text-[10px] font-bold text-on-surface-variant uppercase mb-1">Longitude</label>
+                  <input type="text" id="issue-lng" class="w-full border-outline-variant rounded-lg p-2 bg-slate-50 text-xs font-mono" placeholder="Not set" readonly>
                 </div>
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" for="issue-image">Upload Photo (Optional, Max 5MB)</label>
-              <input type="file" id="issue-image" class="form-control" accept="image/*">
+            <div>
+              <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2" for="issue-image">Upload Photo (Optional, Max 5MB)</label>
+              <input type="file" id="issue-image" class="w-full border-outline-variant border rounded-lg p-2 bg-surface-container-lowest text-xs text-on-surface-variant file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary file:cursor-pointer" accept="image/*">
             </div>
           </div>
 
-          <!-- Custom Duplicate Warning Box (Production-grade UX) -->
-          <div id="duplicate-warning-card" class="card" style="display: none; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.3); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 12px; box-shadow: var(--shadow-md);">
-            <div style="display: flex; gap: 0.6rem; align-items: flex-start; margin-bottom: 1rem;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px; color: var(--status-pending); flex-shrink: 0;">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                <line x1="12" y1="9" x2="12" y2="13"></line>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
+          <!-- Similarity Duplicate Warning Box -->
+          <div id="duplicate-warning-card" class="hidden p-6 rounded-xl border border-yellow-300 bg-yellow-50 shadow-md space-y-4">
+            <div class="flex gap-3 items-start">
+              <span class="material-symbols-outlined text-yellow-600 text-3xl font-bold flex-shrink-0">warning</span>
               <div>
-                <h4 style="color: var(--status-pending); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem;">Similarity Warning: Duplicate Issue Found</h4>
-                <p style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.4; margin-bottom: 0;">
-                  A very similar issue has already been reported within 300 meters of your pinned location. You can support this existing complaint to boost its priority, or report a separate issue.
+                <h4 class="text-yellow-900 text-base font-bold">Similarity Warning: Duplicate Issue Found</h4>
+                <p class="text-yellow-800 text-sm mt-1 leading-relaxed">
+                  A very similar issue has already been reported within 300 meters of your pinned location. You can support this existing complaint to boost its priority, or force submit a separate issue.
                 </p>
               </div>
             </div>
             
-            <!-- Pinned duplicate details card -->
-            <div style="background: rgba(9, 15, 29, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 1.25rem;">
-              <h5 id="dup-title" style="font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem;"></h5>
-              <p id="dup-desc" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.4;"></p>
-              <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.8rem;">
-                <span id="dup-location" style="display: inline-flex; align-items: center; gap: 0.3rem;"></span>
-                <span id="dup-distance" style="display: inline-flex; align-items: center; gap: 0.3rem; font-weight: bold; color: var(--primary);"></span>
+            <div class="bg-black/5 p-4 rounded-lg border border-black/10">
+              <h5 id="dup-title" class="font-bold text-sm text-on-background"></h5>
+              <p id="dup-desc" class="text-xs text-on-surface-variant mt-1 leading-relaxed"></p>
+              <div class="text-xs text-on-surface-variant mt-2 flex gap-4">
+                <span id="dup-location" class="flex items-center gap-1"></span>
+                <span id="dup-distance" class="flex items-center gap-1 font-bold text-primary"></span>
               </div>
             </div>
 
-            <!-- Actions -->
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <button type="button" id="btn-support-existing" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem; background-color: var(--status-resolved); box-shadow: 0 2px 6px 0 rgba(16, 185, 129, 0.25);">
+            <div class="flex gap-3 flex-wrap">
+              <button type="button" id="btn-support-existing" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg text-xs flex items-center gap-1 shadow-sm transition-all">
                 👍 Upvote & Support Existing
               </button>
-              <button type="button" id="btn-force-submit" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; border: 1px solid var(--border-color);">
+              <button type="button" id="btn-force-submit" class="bg-surface-container-high border border-outline-variant text-on-surface font-bold py-2 px-4 rounded-lg text-xs hover:bg-surface-container-highest transition-all">
                 Report Anyway
               </button>
-              <button type="button" id="btn-cancel-duplicate" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; background: none; border: none; color: var(--text-muted);">
+              <button type="button" id="btn-cancel-duplicate" class="text-xs font-bold text-on-surface-variant hover:text-on-background px-2 transition-all">
                 Cancel
               </button>
             </div>
           </div>
 
-          <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+          <button type="submit" id="submit-btn" class="w-full bg-primary hover:bg-primary-container text-white font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all text-sm mt-8">
             Submit Report
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </button>
         </form>
       </div>

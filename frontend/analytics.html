@@ -1,124 +1,287 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CivicConnect - Analytics & Trends</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Analytics | CivicConnect</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Theme Config -->
+  <script id="tailwind-config">
+    try {
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "on-primary-fixed": "#00174b",
+              "surface": "#f8f9ff",
+              "primary-fixed": "#dbe1ff",
+              "on-error-container": "#93000a",
+              "surface-dim": "#cbdbf5",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#4edea3",
+              "on-error": "#ffffff",
+              "on-surface-variant": "#434655",
+              "surface-container-highest": "#d3e4fe",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#b4c5ff",
+              "primary": "#004ac6",
+              "surface-container-high": "#dce9ff",
+              "surface-tint": "#0053db",
+              "on-primary": "#ffffff",
+              "on-secondary-container": "#00714d",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed": "#6ffbbe",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffddb8",
+              "on-secondary-fixed-variant": "#005236",
+              "error": "#ba1a1a",
+              "inverse-on-surface": "#eaf1ff",
+              "inverse-primary": "#b4c5ff",
+              "on-secondary-fixed": "#002113",
+              "primary-container": "#2563eb",
+              "on-tertiary-container": "#ffeedd",
+              "tertiary": "#784b00",
+              "surface-variant": "#d3e4fe",
+              "tertiary-container": "#996100",
+              "surface-container": "#e5eeff",
+              "inverse-surface": "#213145",
+              "surface-container-low": "#eff4ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-tertiary-fixed": "#2a1700",
+              "background": "#f8f9ff",
+              "outline": "#737686",
+              "on-tertiary-fixed-variant": "#653e00",
+              "tertiary-fixed-dim": "#ffb95f",
+              "on-background": "#0b1c30",
+              "surface-bright": "#f8f9ff",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#6cf8bb",
+              "secondary": "#006c49",
+              "on-surface": "#0b1c30",
+              "outline-variant": "#c3c6d7"
+            },
+            "borderRadius": {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "full": "9999px"
+            },
+            "spacing": {
+              "margin-mobile": "16px",
+              "stack-md": "16px",
+              "gutter": "24px",
+              "margin-desktop": "40px",
+              "stack-lg": "24px",
+              "stack-xs": "4px",
+              "stack-sm": "8px",
+              "stack-xl": "48px",
+              "unit": "4px",
+              "container-max": "1280px"
+            },
+            "fontFamily": {
+              "headline-lg-mobile": ["Geist"],
+              "headline-lg": ["Geist"],
+              "label-md": ["Geist"],
+              "display-lg": ["Geist"],
+              "label-sm": ["Geist"],
+              "body-md": ["Inter"],
+              "body-lg": ["Inter"],
+              "headline-md": ["Geist"]
+            },
+            "fontSize": {
+              "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+              "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+              "label-md": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500" }],
+              "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+              "label-sm": ["12px", { "lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "600" }],
+              "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+              "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+              "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }]
+            }
+          },
+        },
+      }
+    } catch (_e) { }
+  </script>
+  <style>
+    body {
+      background-color: #f8f9ff;
+      color: #0b1c30;
+      font-family: 'Inter', sans-serif;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .card-shadow {
+      box-shadow: 0px 1px 3px rgba(15, 23, 42, 0.05);
+    }
+  </style>
 </head>
-<body>
+<body class="flex min-h-screen overflow-x-hidden">
 
-  <!-- Navigation Bar -->
-  <header class="navbar">
-    <a href="dashboard.html" class="nav-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M4 10l8-7 8 7"/>
-      </svg>
-      CivicConnect Analytics
-    </a>
-    <nav class="nav-links">
-      <span id="welcome-message" style="font-weight: 500;">Welcome</span>
-      <a href="dashboard.html" id="back-dashboard-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 3px;">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-        Back to Dashboard
+  <!-- SideNavBar -->
+  <nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 p-4 gap-stack-md bg-surface-container-low border-r border-outline-variant w-64 z-50">
+    <div class="flex flex-col gap-stack-xs px-2 mb-stack-xl">
+      <h1 class="text-headline-sm font-black text-primary text-2xl">CivicConnect</h1>
+      <p class="text-label-md font-label-md text-on-surface-variant">Citizen Portal</p>
+    </div>
+    <div class="flex flex-col gap-stack-sm flex-grow">
+      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="text-label-md">Dashboard</span>
       </a>
-      <button id="logout-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-        Logout
-      </button>
-    </nav>
-  </header>
-
-  <main class="container fade-in" style="max-width: 1200px; padding: 2rem 1rem;">
-    <div style="margin-bottom: 2rem;">
-      <h2>Civic Performance & Analytics</h2>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.3rem;">
-        Track resolution rates, categories reported, monthly volume, and priority allocations.
-      </p>
+      <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">list_alt</span>
+        <span class="text-label-md">My Issues</span>
+      </a>
+      <a href="report.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span class="text-label-md">Report New</span>
+      </a>
+      <!-- Active: Analytics -->
+      <a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold scale-95 transition-all cursor-pointer">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+        <span class="text-label-md">Analytics</span>
+      </a>
+      <a href="map.html" class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+        <span class="material-symbols-outlined">map</span>
+        <span class="text-label-md">Interactive Map</span>
+      </a>
     </div>
-
-    <!-- Alert Notification Panel -->
-    <div id="alert-box" style="display: none;"></div>
-
-    <!-- Metrics Cards Grid -->
-    <div class="dashboard-stats-grid" style="margin-bottom: 2rem;">
-      <!-- Total -->
-      <div class="stat-card">
-        <div class="stat-icon-wrapper primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">Total Complaints</span>
-          <span class="stat-val" id="stats-total">0</span>
-        </div>
-      </div>
-      <!-- Pending -->
-      <div class="stat-card">
-        <div class="stat-icon-wrapper pending">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">Pending Issues</span>
-          <span class="stat-val" id="stats-pending">0</span>
-        </div>
-      </div>
-      <!-- In Progress -->
-      <div class="stat-card">
-        <div class="stat-icon-wrapper progress">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">In Progress</span>
-          <span class="stat-val" id="stats-progress">0</span>
-        </div>
-      </div>
-      <!-- Resolved -->
-      <div class="stat-card">
-        <div class="stat-icon-wrapper resolved">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-label">Resolved Issues</span>
-          <span class="stat-val" id="stats-resolved">0</span>
-        </div>
-      </div>
+    <div class="flex flex-col gap-stack-sm border-t border-outline-variant pt-stack-md">
+      <a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+        <span class="material-symbols-outlined">contact_support</span>
+        <span class="text-label-md">Support</span>
+      </a>
+      <a id="logout-btn" class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all cursor-pointer">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="text-label-md">Logout</span>
+      </a>
     </div>
+  </nav>
 
-    <!-- Charts Layout Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-      
-      <!-- Trend Line Chart -->
-      <div class="card" style="padding: 1.5rem;">
-        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Monthly Reporting Volume</h3>
-        <div style="position: relative; height: 320px;">
-          <canvas id="trendChart"></canvas>
+  <!-- Main Content Area -->
+  <main class="flex-1 md:ml-64 bg-surface min-h-screen">
+    <!-- TopBar -->
+    <header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md flex justify-between items-center px-margin-desktop h-16 border-b border-outline-variant">
+      <div class="flex-1 max-w-md">
+        <div class="text-lg font-semibold text-on-background">Analytics &amp; Trends</div>
+      </div>
+      <div class="flex items-center gap-stack-lg">
+        <div class="flex items-center gap-stack-sm pl-stack-md">
+          <div class="text-right hidden sm:block">
+            <p id="user-name-top" class="text-label-md font-bold leading-tight">Loading...</p>
+            <p id="user-role-top" class="text-label-sm text-on-surface-variant leading-tight">Citizen</p>
+          </div>
+          <div class="w-10 h-10 rounded-full border-2 border-primary-fixed overflow-hidden bg-slate-200">
+            <div id="user-avatar-placeholder" class="w-full h-full flex items-center justify-center bg-primary text-white font-bold uppercase text-sm">?</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Canvas -->
+    <div class="p-margin-desktop max-w-[1280px] mx-auto py-8 space-y-8">
+
+      <!-- Page Title -->
+      <div>
+        <h2 class="text-2xl font-bold text-on-background">Civic Performance &amp; Analytics</h2>
+        <p class="text-sm text-on-surface-variant mt-1">Track resolution rates, categories reported, monthly volume, and priority allocations.</p>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="alert-box" class="hidden p-4 rounded-xl border text-sm font-semibold transition-all"></div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Total -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-5 card-shadow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">folder_open</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Total</p>
+            <p id="stats-total" class="text-3xl font-black text-on-background leading-none mt-0.5">0</p>
+          </div>
+        </div>
+        <!-- Pending -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-5 card-shadow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-orange-600" style="font-variation-settings: 'FILL' 1;">pending</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Pending</p>
+            <p id="stats-pending" class="text-3xl font-black text-orange-600 leading-none mt-0.5">0</p>
+          </div>
+        </div>
+        <!-- In Progress -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-5 card-shadow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-blue-600" style="font-variation-settings: 'FILL' 1;">autorenew</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">In Progress</p>
+            <p id="stats-progress" class="text-3xl font-black text-blue-600 leading-none mt-0.5">0</p>
+          </div>
+        </div>
+        <!-- Resolved -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-5 card-shadow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined text-green-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Resolved</p>
+            <p id="stats-resolved" class="text-3xl font-black text-green-600 leading-none mt-0.5">0</p>
+          </div>
         </div>
       </div>
 
-      <!-- Categories Pie Chart -->
-      <div class="card" style="padding: 1.5rem;">
-        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Complaints by Category</h3>
-        <div style="position: relative; height: 320px;">
-          <canvas id="categoryChart"></canvas>
+      <!-- Charts Row 1 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Trend Line Chart -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6 card-shadow">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h3 class="text-base font-bold text-on-background">Monthly Reporting Volume</h3>
+              <p class="text-xs text-on-surface-variant mt-0.5">Issues submitted over the past 6 months</p>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant">show_chart</span>
+          </div>
+          <div class="relative h-72">
+            <canvas id="trendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Category Doughnut Chart -->
+        <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6 card-shadow">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h3 class="text-base font-bold text-on-background">Complaints by Category</h3>
+              <p class="text-xs text-on-surface-variant mt-0.5">Distribution across reported issue types</p>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant">donut_large</span>
+          </div>
+          <div class="relative h-72">
+            <canvas id="categoryChart"></canvas>
+          </div>
         </div>
       </div>
 
-      <!-- Priority Distribution Bar Chart -->
-      <div class="card" style="padding: 1.5rem; grid-column: 1 / -1;">
-        <h3 style="margin-bottom: 1.5rem; color: var(--text-main);">Priority Distribution Share</h3>
-        <div style="position: relative; height: 280px;">
+      <!-- Charts Row 2 — Full Width Priority Bar -->
+      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant p-6 card-shadow">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h3 class="text-base font-bold text-on-background">Priority Distribution</h3>
+            <p class="text-xs text-on-surface-variant mt-0.5">Breakdown of issues by assigned priority level</p>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant">bar_chart</span>
+        </div>
+        <div class="relative h-64">
           <canvas id="priorityChart"></canvas>
         </div>
       </div>
@@ -128,7 +291,7 @@
 
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- Custom Analytics scripts -->
+  <!-- Analytics Controller -->
   <script src="js/analytics.js"></script>
 </body>
 </html>
